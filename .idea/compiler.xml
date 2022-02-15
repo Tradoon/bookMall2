@@ -2,6 +2,7 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -16,14 +17,16 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="mall-security" target="1.8" />
       <module name="mall-sercurity" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="BookMall" options="-parameters" />
       <module name="mall-admin" options="-parameters" />
+      <module name="mall-common" options="-parameters" />
       <module name="mall-demo" options="-parameters" />
+      <module name="mall-mbg" options="-parameters" />
       <module name="mall-portal" options="-parameters" />
       <module name="mall-search" options="-parameters" />
       <module name="mall-security" options="-parameters" />
