@@ -1,6 +1,6 @@
-package com.tradoom.bookMall.service.impl;
+package com.tradoon.bookMall.service.impl;
 
-import com.tradoom.bookMall.service.AdminService;
+import com.tradoon.bookMall.service.UmsAdminService;
 import com.tradoon.bookMall.api.CommonResult;
 import com.tradoon.bookMall.api.ResultCode;
 import com.tradoon.bookMall.dao.UmsAdminMapper;
@@ -18,7 +18,7 @@ import java.util.Date;
  * date:
  */
 @Service
-public class AdminServiceImpl implements AdminService {
+public class UmsAdminServiceImpl implements UmsAdminService {
     @Autowired
     UmsAdminMapper adminMapper;
     @Autowired
@@ -38,6 +38,8 @@ public class AdminServiceImpl implements AdminService {
             }
             String pwd = passwordEncoder.encode(user.getPassword());
             user.setPassword(pwd);
+            user.setLoginTime(new Date());
+            user.setCreateTime(new Date());
             adminMapper.insertAdmin(user);
         }
         return CommonResult.success(user);
@@ -45,22 +47,12 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public CommonResult<UmsAdmin> login(UmsAdmin user) {
-//        if(StringUtils.isNotBlank(user.getUsername())&&StringUtils.isNotBlank(user.getPassword())){
-//            UmsAdmin umsAdmin = adminMapper.selectByNameAndKey(user.getUsername(), null);
-//            if(umsAdmin==null)
-//                //用户名不存在
-//                return CommonResult.failed(ResultCode.NOADMIN.getCode(), ResultCode.NOADMIN.getMessage());
-//            if(!passwordEncoder.matches(user.getPassword(),umsAdmin.getPassword())){
-//                //密码错误
-//                return CommonResult.failed(ResultCode.PASSWORDERRO.getCode(), ResultCode.PASSWORDERRO.getMessage());
-//
-//            }else{
-//               // todo 改成token
-//                return CommonResult.success(umsAdmin);
-//                //  new UsernamePasswordAuthenticationToken(umsAdmin,null,)
-//               }
-//        }
-        return CommonResult.failed();
+//    登录成功
+//        获取token进行计算返回jwt
+
+//    登录失败
+//        对应的信息
+      return CommonResult.failed();
     }
 
     @Override
@@ -81,6 +73,7 @@ public class AdminServiceImpl implements AdminService {
             return ;
         }
     }
+
     //应户名或者姓名分页获取用户列表
 
     //修改指定用户的密码/重置密码

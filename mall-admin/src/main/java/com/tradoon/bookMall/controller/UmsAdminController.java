@@ -1,6 +1,6 @@
-package com.tradoom.bookMall.controller;
+package com.tradoon.bookMall.controller;
 
-import com.tradoom.bookMall.service.AdminService;
+import com.tradoon.bookMall.service.UmsAdminService;
 import com.tradoon.bookMall.api.CommonResult;
 import com.tradoon.bookMall.model.UmsAdmin;
 import io.swagger.annotations.ApiOperation;
@@ -17,7 +17,14 @@ import org.springframework.web.bind.annotation.*;
 public class UmsAdminController {
 
     @Autowired
-    AdminService adminService;
+    UmsAdminService adminService;
+
+    @ApiOperation("测试security")
+    @GetMapping("/test")
+    public String testSecurity(){
+        return "hello";
+    }
+
     @ApiOperation(value ="用户注册",httpMethod = "POST")
     @PostMapping("/register")
     public CommonResult<UmsAdmin> register(@RequestBody UmsAdmin user){

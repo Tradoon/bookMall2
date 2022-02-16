@@ -1,4 +1,4 @@
-package com.tradoom.bookMall.service;
+package com.tradoon.bookMall.service;
 
 import com.tradoon.bookMall.api.CommonResult;
 import com.tradoon.bookMall.model.UmsAdmin;
@@ -8,7 +8,7 @@ import com.tradoon.bookMall.model.UmsAdmin;
  * desciption:
  * date:2022/ / /
  */
-public interface AdminService {
+public interface UmsAdminService {
     /**
      *
      * @param user
