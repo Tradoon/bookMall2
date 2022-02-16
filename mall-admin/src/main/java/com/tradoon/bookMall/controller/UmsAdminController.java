@@ -40,6 +40,11 @@ public class UmsAdminController {
         return adminService.login(user);
 }
 
+    @ApiOperation(value = "用户登出",httpMethod = "POST")
+    @PostMapping("/logout")
+    public CommonResult logout(){
+        return  adminService.logout();
+    }
     @ApiOperation(value = "获取指定用户的信息",httpMethod = "GET")
     @GetMapping("/{id}")
     public CommonResult<UmsAdmin> getItem(@PathVariable Long id){

@@ -1,6 +1,7 @@
 package com.tradoon.bookMall.service.impl;
 
 import com.tradoon.bookMall.bo.AdminUserDetails;
+import com.tradoon.bookMall.exception.TokenException;
 import com.tradoon.bookMall.service.RedisService;
 import com.tradoon.bookMall.service.UmsAdminService;
 import com.tradoon.bookMall.api.CommonResult;
@@ -9,11 +10,13 @@ import com.tradoon.bookMall.dao.UmsAdminMapper;
 import com.tradoon.bookMall.model.UmsAdmin;
 import com.tradoon.bookMall.utils.JwtTokenUtil;
 import com.tradoon.bookMall.utils.JwtUtil;
+import lombok.extern.slf4j.Slf4j;
 import net.logstash.logback.encoder.org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +30,7 @@ import java.util.Objects;
  * date:
  */
 @Service
+@Slf4j
 public class UmsAdminServiceImpl implements UmsAdminService {
     @Autowired
     AuthenticationManager authenticationManager;
@@ -88,6 +92,26 @@ public class UmsAdminServiceImpl implements UmsAdminService {
 
 //    登录失败
 //        对应的信息
+    }
+
+    @Override
+    public CommonResult logout() {
+        // 获取securityContextHolder 的值
+        UsernamePasswordAuthenticationToken authentication = (UsernamePasswordAuthenticationToken)SecurityContextHolder.getContext().getAuthentication();
+        AdminUserDetails principal = (AdminUserDetails) authentication.getPrincipal();
+        //获取user id
+        String key = "admin:id:" + principal.getUmsAdmin().getId();
+        if(StringUtils.isBlank(key)){
+            log.info("从securityContext中获取的数据为空");
+            throw  new TokenException("用户无相关信息");
+        }
+        //从redis中删除该id的数据
+        redis.del(key);
+        return CommonResult.success("登出成功");
+
+
+
+
     }
 
     @Override

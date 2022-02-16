@@ -26,4 +26,6 @@ public interface UmsAdminService {
     void update(Long id, UmsAdmin admin);
 
     CommonResult login(UmsAdmin user);
+
+    CommonResult logout();
 }
