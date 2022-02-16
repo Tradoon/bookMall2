@@ -1,5 +1,6 @@
 package com.tradoon.bookMall.bo;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tradoon.bookMall.model.UmsAdmin;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,6 +18,8 @@ import java.util.Collection;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIgnoreProperties({"enabled","accountNonExpired", "accountNonLocked",
+        "credentialsNonExpired", "authorities","password","username"})
 public class AdminUserDetails implements UserDetails {
     UmsAdmin umsAdmin;
     @Override

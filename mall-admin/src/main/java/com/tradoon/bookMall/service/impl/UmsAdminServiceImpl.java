@@ -1,6 +1,7 @@
 package com.tradoon.bookMall.service.impl;
 
 import com.tradoon.bookMall.bo.AdminUserDetails;
+import com.tradoon.bookMall.service.RedisService;
 import com.tradoon.bookMall.service.UmsAdminService;
 import com.tradoon.bookMall.api.CommonResult;
 import com.tradoon.bookMall.api.ResultCode;
@@ -29,6 +30,9 @@ import java.util.Objects;
 public class UmsAdminServiceImpl implements UmsAdminService {
     @Autowired
     AuthenticationManager authenticationManager;
+
+    @Autowired
+    RedisService redis;
 
 //    @Autowired
 //    JwtTokenUtil jwtTokenUtil;
@@ -72,6 +76,9 @@ public class UmsAdminServiceImpl implements UmsAdminService {
         String jwt = JwtUtil.createJWT(String.valueOf(principal.getUmsAdmin().getId()));
 //        String jwt=jwtTokenUtil.generateToken(principal);
         HashMap<String, String> tokenMap = new HashMap<>();
+        //信息存入redis，啥时候取呢
+        String redisKey="admin:id:";
+        redis.set(redisKey+principal.getUmsAdmin().getId(),principal);
         tokenMap.put("token",jwt);
 
         return CommonResult.success(tokenMap);
