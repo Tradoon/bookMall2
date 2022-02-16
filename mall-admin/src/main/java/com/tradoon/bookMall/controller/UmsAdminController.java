@@ -5,6 +5,7 @@ import com.tradoon.bookMall.api.CommonResult;
 import com.tradoon.bookMall.model.UmsAdmin;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/admin")
 public class UmsAdminController {
+
 
     @Autowired
     UmsAdminService adminService;
@@ -31,6 +33,7 @@ public class UmsAdminController {
 
         return  adminService.register(user);
     }
+
     @ApiOperation(value = "用户登录",httpMethod = "POST")
     @PostMapping("/login")
     public CommonResult login(@RequestBody UmsAdmin user){

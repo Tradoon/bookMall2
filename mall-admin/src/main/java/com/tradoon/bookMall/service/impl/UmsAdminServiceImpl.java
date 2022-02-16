@@ -1,24 +1,38 @@
 package com.tradoon.bookMall.service.impl;
 
+import com.tradoon.bookMall.bo.AdminUserDetails;
 import com.tradoon.bookMall.service.UmsAdminService;
 import com.tradoon.bookMall.api.CommonResult;
 import com.tradoon.bookMall.api.ResultCode;
 import com.tradoon.bookMall.dao.UmsAdminMapper;
 import com.tradoon.bookMall.model.UmsAdmin;
+import com.tradoon.bookMall.utils.JwtTokenUtil;
+import com.tradoon.bookMall.utils.JwtUtil;
 import net.logstash.logback.encoder.org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Objects;
 
 /**
- * author:
+ * author:tradoon
  * desciption:
  * date:
  */
 @Service
 public class UmsAdminServiceImpl implements UmsAdminService {
+    @Autowired
+    AuthenticationManager authenticationManager;
+
+//    @Autowired
+//    JwtTokenUtil jwtTokenUtil;
+
     @Autowired
     UmsAdminMapper adminMapper;
     @Autowired
@@ -46,13 +60,27 @@ public class UmsAdminServiceImpl implements UmsAdminService {
     }
 
     @Override
-    public CommonResult<UmsAdmin> login(UmsAdmin user) {
+    public CommonResult login(UmsAdmin user) {
 //    登录成功
+        UsernamePasswordAuthenticationToken authenticationToken=new UsernamePasswordAuthenticationToken(
+                user.getUsername(),user.getPassword());
+        Authentication authenticate = authenticationManager.authenticate(authenticationToken);
+        if(Objects.isNull(authenticate)){
+            CommonResult.failed(ResultCode.PASSWORDERRO.getCode(),ResultCode.PASSWORDERRO.getMessage());
+        }
+        AdminUserDetails principal = (AdminUserDetails) authenticate.getPrincipal();
+        String jwt = JwtUtil.createJWT(String.valueOf(principal.getUmsAdmin().getId()));
+//        String jwt=jwtTokenUtil.generateToken(principal);
+        HashMap<String, String> tokenMap = new HashMap<>();
+        tokenMap.put("token",jwt);
+
+        return CommonResult.success(tokenMap);
+
+
 //        获取token进行计算返回jwt
 
 //    登录失败
 //        对应的信息
-      return CommonResult.failed();
     }
 
     @Override
