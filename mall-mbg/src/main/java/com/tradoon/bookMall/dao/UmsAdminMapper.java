@@ -3,7 +3,6 @@ package com.tradoon.bookMall.dao;
 import com.tradoon.bookMall.model.UmsAdmin;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 /**
  * author:tradoon

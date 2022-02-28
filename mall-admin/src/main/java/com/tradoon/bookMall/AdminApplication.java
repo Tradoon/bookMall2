@@ -9,7 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * desciption:
  * date:2022/ / /
  */
-@SpringBootApplication(scanBasePackages = "com.tradoon.bookMall")
+//scanBasePackages = "com.tradoon.bookMall"
+@SpringBootApplication
 @MapperScan("com.tradoon.bookMall.dao")
 public class AdminApplication {
     public static void main(String[] args) {

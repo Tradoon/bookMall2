@@ -1,8 +1,9 @@
-package com.tradoon.bookMall;
+package com.tradoon.mallMbg;
 
+import com.tradoon.bookMall.MbgApplication;
 import com.tradoon.bookMall.dao.UmsAdminMapper;
+import com.tradoon.bookMall.dao.UmsAdminRoleRelationDao;
 import com.tradoon.bookMall.model.UmsAdmin;
-import org.apache.ibatis.annotations.Mapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +15,19 @@ import org.springframework.test.context.junit4.SpringRunner;
  * desciption:
  * date:2022/ / /
  */
-@SpringBootTest
+@SpringBootTest(classes = MbgApplication.class)
 @RunWith(SpringRunner.class)
 public class MbfTest {
     @Autowired
     UmsAdminMapper umsAdminMapper;
+    @Autowired
+    UmsAdminRoleRelationDao umsRole;
+
+    @Test
+    public void getResouce(){
+        System.out.println(umsRole.getResourceList(1L));
+    }
+
     @Test
     public void testAdminMapper(){
 

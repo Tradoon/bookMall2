@@ -1,5 +1,6 @@
 package com.tradoon.bookMall.service.impl;
 
+import com.tradoon.bookMall.api.RedisPreKey;
 import com.tradoon.bookMall.bo.AdminUserDetails;
 import com.tradoon.bookMall.exception.TokenException;
 import com.tradoon.bookMall.service.RedisService;
@@ -8,7 +9,6 @@ import com.tradoon.bookMall.api.CommonResult;
 import com.tradoon.bookMall.api.ResultCode;
 import com.tradoon.bookMall.dao.UmsAdminMapper;
 import com.tradoon.bookMall.model.UmsAdmin;
-import com.tradoon.bookMall.utils.JwtTokenUtil;
 import com.tradoon.bookMall.utils.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import net.logstash.logback.encoder.org.apache.commons.lang.StringUtils;
@@ -81,7 +81,7 @@ public class UmsAdminServiceImpl implements UmsAdminService {
 //        String jwt=jwtTokenUtil.generateToken(principal);
         HashMap<String, String> tokenMap = new HashMap<>();
         //信息存入redis，啥时候取呢
-        String redisKey="admin:id:";
+        String redisKey= RedisPreKey.ADMIN_PREKEY.getPreKey();
         redis.set(redisKey+principal.getUmsAdmin().getId(),principal);
         tokenMap.put("token",jwt);
 
@@ -100,7 +100,7 @@ public class UmsAdminServiceImpl implements UmsAdminService {
         UsernamePasswordAuthenticationToken authentication = (UsernamePasswordAuthenticationToken)SecurityContextHolder.getContext().getAuthentication();
         AdminUserDetails principal = (AdminUserDetails) authentication.getPrincipal();
         //获取user id
-        String key = "admin:id:" + principal.getUmsAdmin().getId();
+        String key = RedisPreKey.ADMIN_PREKEY.getPreKey() + principal.getUmsAdmin().getId();
         if(StringUtils.isBlank(key)){
             log.info("从securityContext中获取的数据为空");
             throw  new TokenException("用户无相关信息");
@@ -108,9 +108,6 @@ public class UmsAdminServiceImpl implements UmsAdminService {
         //从redis中删除该id的数据
         redis.del(key);
         return CommonResult.success("登出成功");
-
-
-
 
     }
 

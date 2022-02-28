@@ -1,11 +1,11 @@
 package com.tradoon.bookMall.controller;
 
+import com.tradoon.bookMall.dao.UmsAdminRoleRelationDao;
 import com.tradoon.bookMall.service.UmsAdminService;
 import com.tradoon.bookMall.api.CommonResult;
 import com.tradoon.bookMall.model.UmsAdmin;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -20,6 +20,8 @@ public class UmsAdminController {
 
     @Autowired
     UmsAdminService adminService;
+
+
 
     @ApiOperation("测试security")
     @GetMapping("/test")
