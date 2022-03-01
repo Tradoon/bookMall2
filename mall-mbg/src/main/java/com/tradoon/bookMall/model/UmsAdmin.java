@@ -22,8 +22,7 @@ import java.util.Date;
 @Component
 @Data
 public class UmsAdmin implements Serializable {
-    @NotEmpty
-    @ApiModelProperty(value = "id",required = true)
+    @ApiModelProperty(value = "id")
     private long id;
 
     @NotEmpty

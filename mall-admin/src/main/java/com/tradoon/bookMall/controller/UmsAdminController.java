@@ -6,6 +6,7 @@ import com.tradoon.bookMall.api.CommonResult;
 import com.tradoon.bookMall.model.UmsAdmin;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -22,7 +23,7 @@ public class UmsAdminController {
     UmsAdminService adminService;
 
 
-
+    @PreAuthorize("hasAnyAuthority('pms:brand:read')")
     @ApiOperation("测试security")
     @GetMapping("/test")
     public String testSecurity(){
@@ -37,6 +38,7 @@ public class UmsAdminController {
     }
 
     @ApiOperation(value = "用户登录",httpMethod = "POST")
+//    @PreAuthorize("hasAnyAuthority('pms:brand:read')")
     @PostMapping("/login")
     public CommonResult login(@RequestBody UmsAdmin user){
         return adminService.login(user);
