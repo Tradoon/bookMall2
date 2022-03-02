@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tradoon.bookMall.dao.UmsRoleDao">
+
+    <select id="getMenuList" resultType="com.tradoon.bookMall.model.UmsMenu">
+        select  m.id id,
+                m.parent_id parentId,
+                m.create_time createTime,
+                m.title title,
+                m.level level,
+                m.sort sort,
+                m.name name,
+                m.icon icon,
+                m.hidden hidden
+
+        from ums_admin_role_relation uarr
+                 left join ums_role_menu_relation urmr on uarr.role_id=urmr.role_id
+                 left join ums_menu m on urmr.menu_id=m.id
+        <if test="adminId!=null">
+            where uarr.admin_id=#{adminId}
+        </if>
+    </select>
+    <select id="getRoleList" resultType="com.tradoon.bookMall.model.UmsRole">
+        select distinct ur.id as id,ur.name as name,ur.description as description,
+                        ur.admin_count as adminCount,ur.create_time as createTime,ur.status as `status`,
+                        ur.sort as sort
+
+        from ums_admin_role_relation uarr
+                 left join ums_role ur on ur.id=uarr.role_id
+        <if test="adminId!=null">
+            where uarr.admin_id=#{adminId}
+        </if>
+    </select>
+</mapper>

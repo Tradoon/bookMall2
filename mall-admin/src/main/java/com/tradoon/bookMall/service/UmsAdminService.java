@@ -3,6 +3,8 @@ package com.tradoon.bookMall.service;
 import com.tradoon.bookMall.api.CommonResult;
 import com.tradoon.bookMall.model.UmsAdmin;
 
+import java.util.Map;
+
 /**
  * author:tradoon
  * desciption:
@@ -28,4 +30,6 @@ public interface UmsAdminService {
     CommonResult login(UmsAdmin user);
 
     CommonResult logout();
+
+    CommonResult<Map<String, Object>> getAdminInfo();
 }

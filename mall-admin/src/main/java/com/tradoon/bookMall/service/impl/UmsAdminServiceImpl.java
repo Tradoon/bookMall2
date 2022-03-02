@@ -2,7 +2,10 @@ package com.tradoon.bookMall.service.impl;
 
 import com.tradoon.bookMall.api.RedisPreKey;
 import com.tradoon.bookMall.bo.AdminUserDetails;
+import com.tradoon.bookMall.dao.UmsRoleDao;
 import com.tradoon.bookMall.exception.TokenException;
+import com.tradoon.bookMall.model.UmsMenu;
+import com.tradoon.bookMall.model.UmsRole;
 import com.tradoon.bookMall.service.RedisService;
 import com.tradoon.bookMall.service.UmsAdminService;
 import com.tradoon.bookMall.api.CommonResult;
@@ -20,9 +23,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * author:tradoon
@@ -34,6 +36,9 @@ import java.util.Objects;
 public class UmsAdminServiceImpl implements UmsAdminService {
     @Autowired
     AuthenticationManager authenticationManager;
+
+    @Autowired
+    UmsRoleDao umsRoleDao;
 
     @Autowired
     RedisService redis;
@@ -109,6 +114,32 @@ public class UmsAdminServiceImpl implements UmsAdminService {
         redis.del(key);
         return CommonResult.success("登出成功");
 
+    }
+
+    @Override
+    public CommonResult<Map<String, Object>> getAdminInfo() {
+        AdminUserDetails adminInfo = (AdminUserDetails) SecurityContextHolder.getContext().
+                getAuthentication().getPrincipal();
+        Map<String,Object> data=new HashMap<>();
+        UmsAdmin umsAdmin = adminInfo.getUmsAdmin();
+        data.put("username",umsAdmin.getUsername());
+//
+        data.put("icon",umsAdmin.getIcon());
+//        menu 和roles
+        
+        if(umsAdmin.getId()!=null){
+            List<UmsMenu> menuList = umsRoleDao.getMenuList(umsAdmin.getId());
+            if(!menuList.isEmpty())
+            data.put("menu",menuList);
+            List<UmsRole> roleList = umsRoleDao.getRoleList(umsAdmin.getId());
+            if(!roleList.isEmpty()){
+                List<String> roles=roleList.stream().map(tmpData->tmpData.getName()).collect(Collectors.toList());
+                data.put("roles",roles);
+            }
+        }
+
+
+        return CommonResult.success(data);
     }
 
     @Override

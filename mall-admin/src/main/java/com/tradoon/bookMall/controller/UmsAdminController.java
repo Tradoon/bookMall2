@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+import java.util.Map;
+
 /**
  * author:tradoon
  * desciption:用户注册/登录 相关接口
@@ -62,5 +65,13 @@ public class UmsAdminController {
         adminService.update(id,admin);
         return ;
     }
+//todo 刷新token
+
+    @ApiOperation("获取当前登录的用户的信息")
+    @GetMapping("/info")
+    public CommonResult<Map<String,Object>> getAdminInfo(Principal principal){
+        return adminService.getAdminInfo();
+    }
+
 
 }
