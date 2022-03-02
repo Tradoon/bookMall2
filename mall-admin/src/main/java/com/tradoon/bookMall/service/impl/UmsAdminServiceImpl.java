@@ -13,6 +13,7 @@ import com.tradoon.bookMall.api.ResultCode;
 import com.tradoon.bookMall.dao.UmsAdminMapper;
 import com.tradoon.bookMall.model.UmsAdmin;
 import com.tradoon.bookMall.utils.JwtUtil;
+import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import net.logstash.logback.encoder.org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -140,6 +141,41 @@ public class UmsAdminServiceImpl implements UmsAdminService {
 
 
         return CommonResult.success(data);
+    }
+
+    @Override
+    public CommonResult refreshToken(String token) {
+        String subject=null;
+
+            if(StringUtils.isNotBlank(token))
+
+                try {
+                subject = JwtUtil.parseJWT(token).getSubject();
+                } catch (Exception e) {
+                    log.info("token 解析异常："+e.getMessage());
+                }
+
+            else {
+                AdminUserDetails principal =
+                        (AdminUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+                if(!Objects.isNull(principal)){
+                    subject= String.valueOf(principal.getUmsAdmin().getId());
+                }else{
+                    log.info("token ：securityContext获取principle对象为空");
+                }
+            }
+      if(!Objects.isNull(subject)) {
+          String redisKey = RedisPreKey.ADMIN_PREKEY.getPreKey() + subject;
+          AdminUserDetails adminUserDetails = (AdminUserDetails) redis.get(redisKey);
+          if (Objects.isNull(adminUserDetails)) {
+              return CommonResult.failed("用户已注销");
+          }
+          String newToken = JwtUtil.createJWT(subject);
+          HashMap<String, String> map = new HashMap<>();
+          map.put("token", newToken);
+          return CommonResult.success(map);
+      }
+      return CommonResult.failed("token刷新失败");
     }
 
     @Override

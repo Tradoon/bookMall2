@@ -40,7 +40,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         try {
              subject = JwtUtil.parseJWT(token).getSubject();
         } catch (Exception e) {
-            logger.info("token 解析失败");
+            logger.info("token 解析失败:"+e.getMessage());
             throw  new TokenException("token 解析失败");
         }
 

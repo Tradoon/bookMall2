@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.Map;
 
@@ -52,6 +53,7 @@ public class UmsAdminController {
     public CommonResult logout(){
         return  adminService.logout();
     }
+
     @ApiOperation(value = "获取指定用户的信息",httpMethod = "GET")
     @GetMapping("/{id}")
     public CommonResult<UmsAdmin> getItem(@PathVariable Long id){
@@ -66,6 +68,11 @@ public class UmsAdminController {
         return ;
     }
 //todo 刷新token
+    @ApiOperation("刷新token")
+    @GetMapping("/refreshToken")
+    public CommonResult refreshToken(HttpServletRequest req){
+        return adminService.refreshToken(req.getHeader("token"));
+    }
 
     @ApiOperation("获取当前登录的用户的信息")
     @GetMapping("/info")

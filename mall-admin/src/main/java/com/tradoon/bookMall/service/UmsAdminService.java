@@ -32,4 +32,6 @@ public interface UmsAdminService {
     CommonResult logout();
 
     CommonResult<Map<String, Object>> getAdminInfo();
+
+    CommonResult refreshToken(String token);
 }
