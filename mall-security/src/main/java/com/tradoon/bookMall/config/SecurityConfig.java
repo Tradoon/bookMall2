@@ -50,6 +50,8 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                 accessDeniedHandler(deniedHandler);
         //配置过滤器的位置
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+        //开启跨域访问
+        http.cors();
     }
     @Bean
     @Override

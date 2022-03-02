@@ -23,7 +23,7 @@ public class UmsAdminController {
     UmsAdminService adminService;
 
 
-    @PreAuthorize("hasAnyAuthority('pms:brand:read')")
+//    @PreAuthorize("hasAnyAuthority('pms:brand:read')")
     @ApiOperation("测试security")
     @GetMapping("/test")
     public String testSecurity(){
