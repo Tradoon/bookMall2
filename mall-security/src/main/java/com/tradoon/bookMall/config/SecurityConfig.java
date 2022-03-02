@@ -1,5 +1,7 @@
 package com.tradoon.bookMall.config;
 
+import com.tradoon.bookMall.component.RestAuthenticationEntryPoint;
+import com.tradoon.bookMall.component.RestfulAccessDeniedHandler;
 import com.tradoon.bookMall.filter.JwtAuthenticationTokenFilter;
 import com.tradoon.bookMall.utils.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig  extends WebSecurityConfigurerAdapter {
     @Autowired
     JwtAuthenticationTokenFilter jwtFilter;
+    @Autowired
+    RestAuthenticationEntryPoint entryPoint;
+    @Autowired
+    RestfulAccessDeniedHandler deniedHandler;
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -38,7 +44,10 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin/register").permitAll()
                 // 除上面外的所有请求全部需要鉴权认证
                 .anyRequest().authenticated();
-
+        //自定义认证失败/授权失败的返回
+        http.exceptionHandling().
+                authenticationEntryPoint(entryPoint).
+                accessDeniedHandler(deniedHandler);
         //配置过滤器的位置
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }

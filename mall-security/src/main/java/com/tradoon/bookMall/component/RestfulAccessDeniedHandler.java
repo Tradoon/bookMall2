@@ -1,0 +1,25 @@
+package com.tradoon.bookMall.component;
+
+import com.tradoon.bookMall.api.CommonResult;
+import com.tradoon.bookMall.utils.SecurityRepUtil;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.stereotype.Component;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+/**
+ * author:tradoon
+ * desciption:
+ * date:2022/ / /
+ */
+@Component
+public class RestfulAccessDeniedHandler implements AccessDeniedHandler {
+    @Override
+    public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e) throws IOException, ServletException {
+        SecurityRepUtil.getResp(httpServletResponse, CommonResult.forbidden(e.getMessage()));
+    }
+}
