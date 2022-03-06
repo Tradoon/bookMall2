@@ -114,4 +114,12 @@
         </if>
 
     </select>
+    <select id="selectByKeyWord" resultType="com.tradoon.bookMall.model.UmsAdmin">
+        select id,username,password,icon,email,nick_name,note,create_time,login_time
+        from ums_admin
+        where status=1
+        <if test="keyword!=null">
+            and username like concat('%',#{keyword},'%')
+        </if>
+    </select>
 </mapper>

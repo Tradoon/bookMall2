@@ -1,5 +1,9 @@
 package com.tradoon.bookMall.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.tradoon.bookMall.api.CommonPage;
 import com.tradoon.bookMall.api.RedisPreKey;
 import com.tradoon.bookMall.bo.AdminUserDetails;
 import com.tradoon.bookMall.dao.UmsRoleDao;
@@ -176,6 +180,22 @@ public class UmsAdminServiceImpl implements UmsAdminService {
           return CommonResult.success(map);
       }
       return CommonResult.failed("token刷新失败");
+    }
+
+    @Override
+    public CommonResult<CommonPage<UmsAdmin>> list(String keyword, Integer pageSize, Integer pageNum) {
+        Page<Object> pageHelper = PageHelper.startPage(pageNum, pageSize);
+        String key;
+        if(StringUtils.isNotBlank(keyword)){
+            key=keyword;
+        }
+        List<UmsAdmin> umsAdmins = adminMapper.selectByKeyWord(keyword);
+        PageInfo<UmsAdmin> pageInfo = new PageInfo<>(umsAdmins);
+        pageInfo.setPageNum(pageHelper.getPageNum());
+        pageInfo.setPageSize(pageHelper.getPageSize());
+        pageInfo.setPages(pageHelper.getPages());
+        pageInfo.setTotal(pageHelper.getTotal());
+        return CommonResult.success(new CommonPage<>(pageInfo));
     }
 
     @Override

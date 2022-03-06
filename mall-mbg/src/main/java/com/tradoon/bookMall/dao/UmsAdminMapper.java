@@ -4,6 +4,8 @@ import com.tradoon.bookMall.model.UmsAdmin;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * author:tradoon
  * desciption:
@@ -31,4 +33,5 @@ public interface UmsAdminMapper {
 
     int updateByPrimaryKeySelective(@Param("admin")UmsAdmin admin);
 
+    List<UmsAdmin> selectByKeyWord(@Param("keyword") String keyword);
 }

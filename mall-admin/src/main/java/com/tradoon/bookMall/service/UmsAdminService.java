@@ -1,5 +1,6 @@
 package com.tradoon.bookMall.service;
 
+import com.tradoon.bookMall.api.CommonPage;
 import com.tradoon.bookMall.api.CommonResult;
 import com.tradoon.bookMall.model.UmsAdmin;
 
@@ -34,4 +35,6 @@ public interface UmsAdminService {
     CommonResult<Map<String, Object>> getAdminInfo();
 
     CommonResult refreshToken(String token);
+
+    CommonResult<CommonPage<UmsAdmin>> list(String keyword, Integer pageSize, Integer pageNum);
 }

@@ -42,6 +42,8 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                 // 对于登录接口 允许匿名访问
                 .antMatchers("/admin/login").permitAll()
                 .antMatchers("/admin/register").permitAll()
+                //方便测试接口先对所有的接口屏蔽security
+                .antMatchers("/**/*").permitAll()
                 // 除上面外的所有请求全部需要鉴权认证
                 .anyRequest().authenticated();
         //自定义认证失败/授权失败的返回

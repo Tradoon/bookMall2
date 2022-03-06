@@ -1,6 +1,6 @@
 package com.tradoon.bookMall.api;
 
-import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -38,9 +38,9 @@ public class CommonPage<T> {
     private List<T> list;
 
 
-    CommonPage(Page<T> pageInfo){
+    public CommonPage(PageInfo<T> pageInfo){
         pageNum=pageInfo.getPageNum();
-        list=pageInfo.getResult();
+        list=pageInfo.getList();
         total=pageInfo.getTotal();
         totalPage=pageInfo.getPages();
         pageSize=pageInfo.getPageSize();
