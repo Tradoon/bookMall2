@@ -7,6 +7,7 @@ import com.tradoon.bookMall.api.CommonPage;
 import com.tradoon.bookMall.api.RedisPreKey;
 import com.tradoon.bookMall.bo.AdminUserDetails;
 import com.tradoon.bookMall.dao.UmsRoleDao;
+import com.tradoon.bookMall.dto.UpdateAdminPasswordParam;
 import com.tradoon.bookMall.exception.TokenException;
 import com.tradoon.bookMall.model.UmsMenu;
 import com.tradoon.bookMall.model.UmsRole;
@@ -196,6 +197,31 @@ public class UmsAdminServiceImpl implements UmsAdminService {
         pageInfo.setPages(pageHelper.getPages());
         pageInfo.setTotal(pageHelper.getTotal());
         return CommonResult.success(new CommonPage<>(pageInfo));
+    }
+
+    @Override
+    public CommonResult updatePassword(UpdateAdminPasswordParam udAdmiPwd) {
+
+        UmsAdmin umsAdmin = adminMapper.selectByNameAndKey(udAdmiPwd.getUsername(), null);
+        String newWord=passwordEncoder.encode(udAdmiPwd.getNewPassword());
+        // 旧密码是否正确
+        if(!passwordEncoder.matches(udAdmiPwd.getOldPassword(),umsAdmin.getPassword())){
+            return CommonResult.failed(ResultCode.PASSWORDERRO.getCode(), ResultCode.PASSWORDERRO.getMessage());
+        }
+        //新旧密码是否相同
+        if(passwordEncoder.matches(udAdmiPwd.getOldPassword(),newWord)){
+            return CommonResult.failed(ResultCode.PASSWORDERRO.getCode(),ResultCode.PASSWORDREPEAT.getMessage());
+        }
+        //新密码更新
+        UmsAdmin admin=new UmsAdmin();
+        if(StringUtils.isNotBlank(udAdmiPwd.getUsername())){
+            admin.setUsername(udAdmiPwd.getUsername());
+        }
+        if(StringUtils.isNotBlank(udAdmiPwd.getNewPassword())){
+            admin.setPassword(newWord);
+        }
+        int updateCol=adminMapper.updateByPrimaryKeySelective(admin);
+        return CommonResult.success(updateCol,"更改成功");
     }
 
     @Override

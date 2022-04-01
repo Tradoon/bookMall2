@@ -51,6 +51,9 @@ public class UmsAdmin implements Serializable {
     @ApiModelProperty(value = "上一次登录实践")
     private Date loginTime;
 
+    @ApiModelProperty(value = "用户状态")
+    private  Integer status;
+
     private static final long serialVersionUID=1L;
     @Override
     public String toString(){

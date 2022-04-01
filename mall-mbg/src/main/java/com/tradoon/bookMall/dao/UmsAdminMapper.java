@@ -29,9 +29,19 @@ public interface UmsAdminMapper {
      */
     UmsAdmin selectByNameAndKey(@Param("username")String username, @Param("password")String password);
 
+    /**
+     * 根据主键查询信息
+     * @param id
+     * @return
+     */
     UmsAdmin selectByPrimaryKey(@Param("id")Long id);
 
-    int updateByPrimaryKeySelective(@Param("admin")UmsAdmin admin);
+    /**
+     *
+     * @param admin
+     * @return
+     */
+    int updateByPrimaryKeySelective(UmsAdmin admin);
 
     List<UmsAdmin> selectByKeyWord(@Param("keyword") String keyword);
 }

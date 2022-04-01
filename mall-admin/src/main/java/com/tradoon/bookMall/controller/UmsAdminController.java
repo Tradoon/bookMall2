@@ -2,6 +2,7 @@ package com.tradoon.bookMall.controller;
 
 import com.tradoon.bookMall.api.CommonPage;
 import com.tradoon.bookMall.dao.UmsAdminRoleRelationDao;
+import com.tradoon.bookMall.dto.UpdateAdminPasswordParam;
 import com.tradoon.bookMall.service.UmsAdminService;
 import com.tradoon.bookMall.api.CommonResult;
 import com.tradoon.bookMall.model.UmsAdmin;
@@ -69,8 +70,13 @@ public class UmsAdminController {
         adminService.update(id, admin);
         return;
     }
+    @ApiOperation(value = "修改指定用户密码",httpMethod = "POST")
+    @PostMapping("/updatePassword")
+    public CommonResult  updatePassword(@RequestBody UpdateAdminPasswordParam udAdmiPwd){
+       return  adminService.updatePassword(udAdmiPwd);
 
-    //todo 刷新token
+    }
+
     @ApiOperation("刷新token")
     @GetMapping("/refreshToken")
     public CommonResult refreshToken(HttpServletRequest req) {
@@ -89,10 +95,10 @@ public class UmsAdminController {
                                                    @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
                                                    @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
 
-
         return adminService.list(keyword, pageSize, pageNum);
 
     }
+
 
 
 }

@@ -2,6 +2,7 @@ package com.tradoon.bookMall.service;
 
 import com.tradoon.bookMall.api.CommonPage;
 import com.tradoon.bookMall.api.CommonResult;
+import com.tradoon.bookMall.dto.UpdateAdminPasswordParam;
 import com.tradoon.bookMall.model.UmsAdmin;
 
 import java.util.Map;
@@ -37,4 +38,6 @@ public interface UmsAdminService {
     CommonResult refreshToken(String token);
 
     CommonResult<CommonPage<UmsAdmin>> list(String keyword, Integer pageSize, Integer pageNum);
+
+    CommonResult updatePassword(UpdateAdminPasswordParam udAdmiPwd);
 }
