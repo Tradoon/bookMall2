@@ -70,6 +70,12 @@ public class UmsAdminController {
         adminService.update(id, admin);
         return;
     }
+
+    @ApiOperation(value = "修改账号状态",httpMethod = "POST")
+    @PostMapping("/updateStatus/{id}")
+    public CommonResult updateStatus(@PathVariable Long id,@RequestParam("status")Integer status){
+        return adminService.changeStatus(id,status);
+    }
     @ApiOperation(value = "修改指定用户密码",httpMethod = "POST")
     @PostMapping("/updatePassword")
     public CommonResult  updatePassword(@RequestBody UpdateAdminPasswordParam udAdmiPwd){
@@ -98,6 +104,7 @@ public class UmsAdminController {
         return adminService.list(keyword, pageSize, pageNum);
 
     }
+
 
 
 

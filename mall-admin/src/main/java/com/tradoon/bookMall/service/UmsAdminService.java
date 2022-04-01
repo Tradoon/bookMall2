@@ -40,4 +40,6 @@ public interface UmsAdminService {
     CommonResult<CommonPage<UmsAdmin>> list(String keyword, Integer pageSize, Integer pageNum);
 
     CommonResult updatePassword(UpdateAdminPasswordParam udAdmiPwd);
+
+    CommonResult changeStatus(Long id, Integer status);
 }

@@ -19,6 +19,7 @@ import com.tradoon.bookMall.dao.UmsAdminMapper;
 import com.tradoon.bookMall.model.UmsAdmin;
 import com.tradoon.bookMall.utils.JwtUtil;
 import io.jsonwebtoken.Claims;
+import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
 import net.logstash.logback.encoder.org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -222,6 +223,20 @@ public class UmsAdminServiceImpl implements UmsAdminService {
         }
         int updateCol=adminMapper.updateByPrimaryKeySelective(admin);
         return CommonResult.success(updateCol,"更改成功");
+    }
+
+    @Override
+    public CommonResult changeStatus(Long id, Integer status) {
+        UmsAdmin admin=new UmsAdmin();
+        if(id!=null){
+            admin.setId(id);
+        }
+        if(status!=null){
+            admin.setStatus(status);
+        }
+        int colNum = adminMapper.updateByPrimaryKeySelective(admin);
+
+        return CommonResult.success(colNum);
     }
 
     @Override
