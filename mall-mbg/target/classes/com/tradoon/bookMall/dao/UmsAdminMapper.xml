@@ -91,13 +91,18 @@
             </if>
         </set>
         where status=1
-        and id=#{id}
+        <if test="id!=null">
+            and id=#{id}
+        </if>
+        <if test="username != null">
+            and username=#{username}
+        </if>
     </update>
     <select id="selectByNameAndKey" resultType="com.tradoon.bookMall.model.UmsAdmin">
         select id,username,password,icon,email,nick_name,note,create_time,login_time
         from ums_admin
         where status=1
-        <if test="username">
+        <if test="username!=null">
             and username=#{username}
         </if>
         <if test="password!=null">
