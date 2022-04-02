@@ -277,16 +277,19 @@ public class UmsAdminServiceImpl implements UmsAdminService {
         List<GrantedAuthority>   authorities=
                 resourceList.stream().map(data->new SimpleGrantedAuthority(data.getValue())).collect(Collectors.toList());
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        AdminUserDetails principal = (AdminUserDetails) auth.getPrincipal();
-        principal.setResourceList(resourceList);
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(principal, auth.getCredentials(), authorities);
+
+        //todo 管理员给用户授予权限，那么这里获取的应该是管理员的SecurityCONTEXT真的能实现吗？后序再测
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(auth.getPrincipal(), auth.getCredentials(), authorities);
+
        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
+        UmsAdmin umsAdmin = adminMapper.selectByPrimaryKey(adminId);
+        AdminUserDetails adminUserDetails = new AdminUserDetails(umsAdmin, resourceList);
         //redis 中的用户信息更改
         redis.update(RedisPreKey.ADMIN_ROLE_RESOURCE.getPreKey()+adminId, resourceList);
-        redis.update(RedisPreKey.ADMIN_PREKEY.getPreKey()+principal.getUmsAdmin().getId(),principal);
+        redis.update(RedisPreKey.ADMIN_PREKEY.getPreKey()+adminId,adminUserDetails);
 
-        return CommonResult.success(redis.get(RedisPreKey.ADMIN_PREKEY.getPreKey()+principal.getUmsAdmin().getId()));
+        return CommonResult.success(redis.get(RedisPreKey.ADMIN_PREKEY.getPreKey()+adminId));
     }
 
     @Override

@@ -43,7 +43,7 @@ public class RedisServiceImpl implements RedisService {
 
     @Override
     public void update(String key, Object value) {
-        del(key);
+//        del(key);
         set(key,value);
     }
 }
