@@ -5,6 +5,7 @@ import com.tradoon.bookMall.api.CommonResult;
 import com.tradoon.bookMall.dto.UpdateAdminPasswordParam;
 import com.tradoon.bookMall.model.UmsAdmin;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -42,4 +43,6 @@ public interface UmsAdminService {
     CommonResult updatePassword(UpdateAdminPasswordParam udAdmiPwd);
 
     CommonResult changeStatus(Long id, Integer status);
+
+    CommonResult updateRole(Long adminId, List<Long> roleIds);
 }

@@ -4,7 +4,6 @@ import com.tradoon.bookMall.model.UmsMenu;
 import com.tradoon.bookMall.model.UmsRole;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.security.core.parameters.P;
 
 import java.util.List;
 
@@ -23,4 +22,5 @@ public interface UmsRoleDao {
     List<UmsMenu> getMenuList(@Param("adminId")Long adminId);
 
     List<UmsRole> getRoleList(@Param("adminId")Long adminId);
+
 }

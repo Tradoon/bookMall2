@@ -1,14 +1,12 @@
 package com.tradoon.bookMall.controller;
 
 import com.tradoon.bookMall.api.CommonPage;
-import com.tradoon.bookMall.dao.UmsAdminRoleRelationDao;
 import com.tradoon.bookMall.dto.UpdateAdminPasswordParam;
 import com.tradoon.bookMall.service.UmsAdminService;
 import com.tradoon.bookMall.api.CommonResult;
 import com.tradoon.bookMall.model.UmsAdmin;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -104,7 +102,15 @@ public class UmsAdminController {
         return adminService.list(keyword, pageSize, pageNum);
 
     }
+//TODO 给用户分配角色
+    @ApiOperation(value = "给用户分配角色",httpMethod = "POST")
+    @PostMapping("/role/update")
+    public CommonResult updateRole(@RequestParam("adminId")Long adminId,
+                                   @RequestParam("roleIds")List<Long> roleIds){
+        return adminService.updateRole(adminId,roleIds);
+    }
 
+    // 获取用户的角色
 
 
 

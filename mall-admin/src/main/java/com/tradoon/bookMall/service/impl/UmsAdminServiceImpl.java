@@ -1,12 +1,16 @@
 package com.tradoon.bookMall.service.impl;
 
+import cn.hutool.core.lang.Snowflake;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.tradoon.bookMall.api.CommonPage;
 import com.tradoon.bookMall.api.RedisPreKey;
 import com.tradoon.bookMall.bo.AdminUserDetails;
+import com.tradoon.bookMall.dao.UmsAdminRoleRelationDao;
 import com.tradoon.bookMall.dao.UmsRoleDao;
+import com.tradoon.bookMall.dao.umsAdminRoleRelationMapper;
+import com.tradoon.bookMall.dto.UmsRoleRelationDto;
 import com.tradoon.bookMall.dto.UpdateAdminPasswordParam;
 import com.tradoon.bookMall.exception.TokenException;
 import com.tradoon.bookMall.model.UmsMenu;
@@ -18,8 +22,7 @@ import com.tradoon.bookMall.api.ResultCode;
 import com.tradoon.bookMall.dao.UmsAdminMapper;
 import com.tradoon.bookMall.model.UmsAdmin;
 import com.tradoon.bookMall.utils.JwtUtil;
-import io.jsonwebtoken.Claims;
-import io.swagger.models.auth.In;
+import com.tradoon.bookMall.utils.SnowflakeConfig;
 import lombok.extern.slf4j.Slf4j;
 import net.logstash.logback.encoder.org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +45,9 @@ import java.util.stream.Collectors;
 @Slf4j
 public class UmsAdminServiceImpl implements UmsAdminService {
     @Autowired
+    SnowflakeConfig snowflakeConfig;
+
+    @Autowired
     AuthenticationManager authenticationManager;
 
     @Autowired
@@ -52,6 +58,9 @@ public class UmsAdminServiceImpl implements UmsAdminService {
 
 //    @Autowired
 //    JwtTokenUtil jwtTokenUtil;
+
+    @Autowired
+    UmsAdminRoleRelationDao umsAdminRoleRelationDao;
 
     @Autowired
     UmsAdminMapper adminMapper;
@@ -237,6 +246,33 @@ public class UmsAdminServiceImpl implements UmsAdminService {
         int colNum = adminMapper.updateByPrimaryKeySelective(admin);
 
         return CommonResult.success(colNum);
+    }
+
+    @Override
+    public CommonResult updateRole(Long adminId, List<Long> roleIds) {
+        //todo 将物理删除该为逻辑删除
+
+        // 刪除原有的角色关系
+        if(adminId!=null&&roleIds.size()!=0){
+            umsAdminRoleRelationDao.deleteByExample(adminId);
+//            umsAdminRoleRelationDao.insertList();
+            List<UmsRoleRelationDto> roleDtoList=new ArrayList<>();
+            for(Long roleId:roleIds){
+                UmsRoleRelationDto umsRoleRelationDto = new UmsRoleRelationDto();
+                umsRoleRelationDto.setRoleId(roleId);
+                umsRoleRelationDto.setId(snowflakeConfig.snowFlackId());
+                umsRoleRelationDto.setAdminId(adminId);
+                roleDtoList.add(umsRoleRelationDto);
+            }
+            if(!roleDtoList.isEmpty())
+            umsAdminRoleRelationDao.insertList(roleDtoList);
+
+        }
+
+        //增加的角色关系
+
+        // redis 中的用户信息以及securityContext中的权限信息
+        return null;
     }
 
     @Override
