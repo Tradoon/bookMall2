@@ -14,6 +14,7 @@ import com.tradoon.bookMall.dto.UmsRoleRelationDto;
 import com.tradoon.bookMall.dto.UpdateAdminPasswordParam;
 import com.tradoon.bookMall.exception.TokenException;
 import com.tradoon.bookMall.model.UmsMenu;
+import com.tradoon.bookMall.model.UmsResource;
 import com.tradoon.bookMall.model.UmsRole;
 import com.tradoon.bookMall.service.RedisService;
 import com.tradoon.bookMall.service.UmsAdminService;
@@ -29,6 +30,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -255,7 +258,8 @@ public class UmsAdminServiceImpl implements UmsAdminService {
         // 刪除原有的角色关系
         if(adminId!=null&&roleIds.size()!=0){
             umsAdminRoleRelationDao.deleteByExample(adminId);
-//            umsAdminRoleRelationDao.insertList();
+
+            //增加的角色关系
             List<UmsRoleRelationDto> roleDtoList=new ArrayList<>();
             for(Long roleId:roleIds){
                 UmsRoleRelationDto umsRoleRelationDto = new UmsRoleRelationDto();
@@ -268,11 +272,21 @@ public class UmsAdminServiceImpl implements UmsAdminService {
             umsAdminRoleRelationDao.insertList(roleDtoList);
 
         }
+        // 以及securityContext中的权限信息
+        List<UmsResource> resourceList = umsAdminRoleRelationDao.getResourceList(adminId);
+        List<GrantedAuthority>   authorities=
+                resourceList.stream().map(data->new SimpleGrantedAuthority(data.getValue())).collect(Collectors.toList());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        AdminUserDetails principal = (AdminUserDetails) auth.getPrincipal();
+        principal.setResourceList(resourceList);
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(principal, auth.getCredentials(), authorities);
+       SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
-        //增加的角色关系
+        //redis 中的用户信息更改
+        redis.update(RedisPreKey.ADMIN_ROLE_RESOURCE.getPreKey()+adminId, resourceList);
+        redis.update(RedisPreKey.ADMIN_PREKEY.getPreKey()+principal.getUmsAdmin().getId(),principal);
 
-        // redis 中的用户信息以及securityContext中的权限信息
-        return null;
+        return CommonResult.success(redis.get(RedisPreKey.ADMIN_PREKEY.getPreKey()+principal.getUmsAdmin().getId()));
     }
 
     @Override

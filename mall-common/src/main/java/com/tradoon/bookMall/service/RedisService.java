@@ -18,4 +18,6 @@ public interface RedisService {
     void del(List<String> keys);
     //查
     Object get(String key);
+
+    void update(String key,Object value);
 }

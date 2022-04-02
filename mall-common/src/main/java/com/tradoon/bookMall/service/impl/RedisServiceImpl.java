@@ -13,7 +13,6 @@ import java.util.concurrent.TimeUnit;
  * date:2022/ / /
  */
 public class RedisServiceImpl implements RedisService {
-    //todo 什么时候注入的类
     @Autowired
     RedisTemplate<String,Object> redisTemplate;
 
@@ -40,5 +39,11 @@ public class RedisServiceImpl implements RedisService {
     @Override
     public Object get(String key) {
        return  redisTemplate.opsForValue().get(key);
+    }
+
+    @Override
+    public void update(String key, Object value) {
+        del(key);
+        set(key,value);
     }
 }

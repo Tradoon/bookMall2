@@ -36,7 +36,7 @@ public class UmsResource implements Serializable {
     @ApiModelProperty("资源名字")
     String resourceName;
 
-    @ApiModelProperty("标志符")
+    @ApiModelProperty("权限标志符")
     String value;
 
     @ApiModelProperty("分类id")
