@@ -35,9 +35,23 @@ public interface PmsPublishingHouseMapper {
      */
     void updateByHouse(@Param("id") Long id, @Param("updateTime") Date updateTime, @Param("status") int status);
 
+    /**
+     * 更改出版社信息
+     * @param house
+     */
     void updateHouse(PublishingHouse house);
 
+    /**
+     * 多条件查找出版社信息
+     * @param publishingHouse
+     * @return
+     */
     PublishingHouse findByInfo(PublishingHouse publishingHouse);
 
+    /**
+     * 查询是否存在名字/csbn/isbn的出版社
+     * @param publishingHouse
+     * @return
+     */
     List<PublishingHouse> mutiFind(PublishingHouse publishingHouse);
 }
