@@ -13,4 +13,6 @@ public interface PmsPublishingHouseService {
     CommonResult<CommonPage<PublishingHouse>> houseList(String keyword, int pageNum, int pageSize);
 
     CommonResult insertPublishingHouse(PublishingHouse publishingHouse);
+
+    CommonResult deletePublishHouse(Long id);
 }

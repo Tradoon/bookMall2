@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
 /**
@@ -22,6 +23,7 @@ public class PublishingHouse {
     @ApiModelProperty("出版社id")
     private Long id ;
 
+    @NotEmpty
     @ApiModelProperty("出版社名字")
     private String publishhouseName;
 
@@ -37,10 +39,12 @@ public class PublishingHouse {
 
 
     // todo 加正则表达式
+    @NotEmpty
     @ApiModelProperty("出版社编号")
     private  String isbn;
 
     // todo 加正则表达式
+    @NotEmpty
     @ApiModelProperty("统一书号")
     private  String csbn;
 

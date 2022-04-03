@@ -15,9 +15,10 @@ public enum ResultCode {
     PASSWORDREPEAT(2003,"新旧密码相同"),
 //300x权限相关错误
     UNAUTHORIZED(3001,"暂未登录或者登录已经过期或redis服务未启动"),
-    FORBIDDEN(3002,"用户没有该权限")
-    ;
+    FORBIDDEN(3002,"用户没有该权限"),
 
+//400x project 相关错误
+    PUBLISHINGHOUSE_REPEAT(4001,"出版社名/isbn/cabn已存在");
     //枚举依赖构造函数
     //枚举之间是，分割
     //todo 还待增加

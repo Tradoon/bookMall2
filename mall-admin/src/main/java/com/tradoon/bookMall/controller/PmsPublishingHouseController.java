@@ -4,9 +4,12 @@ import com.tradoon.bookMall.api.CommonPage;
 import com.tradoon.bookMall.api.CommonResult;
 import com.tradoon.bookMall.model.PublishingHouse;
 import com.tradoon.bookMall.service.PmsPublishingHouseService;
+import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 /**
  * author:tradoon
@@ -26,8 +29,15 @@ public class PmsPublishingHouseController {
     }
     @ApiOperation(value="添加出版社名字",httpMethod = "POST")
     @PostMapping("/create")
-    public CommonResult create(@RequestBody PublishingHouse publishingHouse){
+    public CommonResult create(@Valid  @RequestBody PublishingHouse publishingHouse){
         return pmsPublishingHouseService.insertPublishingHouse(publishingHouse);
+
+    }
+
+    @ApiModelProperty("删除出版社")
+    @GetMapping("/delete/{id}")
+    public CommonResult delete(@PathVariable("id")Long id){
+        return pmsPublishingHouseService.deletePublishHouse(id);
 
     }
 

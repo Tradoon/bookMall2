@@ -42,7 +42,6 @@
             <if test=" publishhouseName!=null">
                 #{publishhouseName},
             </if>
-
             <if test="city !=null">
                 #{city},
             </if>
@@ -68,6 +67,49 @@
         </trim>
         )
     </insert>
+    <update id="updateByHouse">
+        update pms_product  pmsp
+        set  pmsp.delete_status=1
+        <if test="updateTime!=null">
+        ,pmsp.update_time=#{updateTime}
+        </if>
+        where pmsp.publish_house_id=#{id}
+        and pmsp.delete_status=0
+    </update>
+
+    <update id="updateHouse">
+        update pms_publishinghouse
+        <set>
+            <if test=" publishhouseName!=null">
+                publishhouse_name=#{publishhouseName},
+            </if>
+            <if test="city !=null">
+                city=#{city},
+            </if>
+            <if test="type !=null">
+                type= #{type},
+            </if>
+            <if test="isbn !=null">
+                isbn= #{isbn},
+            </if>
+            <if test="csbn !=null">
+                csbn= #{csbn},
+            </if>
+            <if test="createTime !=null">
+                create_time=#{createTime},
+            </if>
+            <if test="updateTime !=null">
+                update_time= #{updateTime},
+            </if>
+            <if test="remark!=null">
+                remark=#{remark},
+            </if>
+            <if test="status!=null">
+                status=#{status}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
 
 
     <select id="houseList" resultType="com.tradoon.bookMall.model.PublishingHouse">
@@ -91,8 +133,75 @@
            OR isbn LIKE concat( '%',#{keyword}, '%' )
            OR csbn LIKE concat( '%',#{keyword}, '%' )
             OR city LIKE concat( '%', #{keyword}, '%' )
-
         </if>
 
     </select>
+    <select id="findByInfo" resultType="com.tradoon.bookMall.model.PublishingHouse">
+        SELECT
+        id,
+        publishhouse_name,
+        city,
+        type,
+        isbn,
+        csbn,
+        create_time,
+        update_time,
+        remark,
+        status
+        FROM
+        pms_publishinghouse
+        <where>
+            <if test=" publishhouseName!=null">
+                publishhouse_name=#{publishhouseName},
+            </if>
+            <if test="city !=null">
+                and city=#{city}
+            </if>
+            <if test="type !=null">
+                and type= #{type}
+            </if>
+            <if test="isbn !=null">
+              and  isbn= #{isbn}
+            </if>
+            <if test="csbn !=null">
+                and csbn= #{csbn}
+            </if>
+            <if test="status!=null">
+                status=#{status}
+            </if>
+        </where>
+
+    </select>
+    <select id="mutiFind" resultType="com.tradoon.bookMall.model.PublishingHouse">
+        SELECT
+        id,
+        publishhouse_name,
+        city,
+        type,
+        isbn,
+        csbn,
+        create_time,
+        update_time,
+        remark,
+        status
+        FROM
+        pms_publishinghouse
+        <where>
+        status = 1
+        <if test="publishhouseName!=null || isbn!=null || csbn!=null">
+            and (
+         <if test="publishhouseName!=null">
+          publishhouse_name=#{publishhouseName}
+         </if>
+        <if test="isbn!=null">
+            or isbn=#{isbn}
+        </if>
+        <if test="csbn!=null">
+            or csbn=#{csbn}
+        </if>
+            )
+        </if>
+        </where>
+    </select>
+
 </mapper>
