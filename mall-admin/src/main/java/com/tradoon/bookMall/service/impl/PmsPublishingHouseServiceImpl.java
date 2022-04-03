@@ -108,4 +108,25 @@ public class PmsPublishingHouseServiceImpl implements PmsPublishingHouseService 
         return CommonResult.success(null);
     }
 
+    @Override
+    public CommonResult updatePublishHouse(Long id, PublishingHouse publishingHouse) {
+
+        // 更改名字查看名字是否重复
+        //更改csbn查看csbn重复
+        //更改isbn查看isbn是否重复
+        PublishingHouse house = new PublishingHouse();
+        house.setIsbn(publishingHouse.getIsbn());
+        house.setCsbn(publishingHouse.getCsbn());
+        house.setPublishhouseName(publishingHouse.getPublishhouseName());
+        List<PublishingHouse> publishingHouses = pmsPublishingHouseMapper.mutiFind(house);
+        for(PublishingHouse houseItem:publishingHouses){
+            if(!id.equals(houseItem.getId())){
+                return CommonResult.failed(ResultCode.PUBLISHINGHOUSE_REPEAT.getCode(),ResultCode.PUBLISHINGHOUSE_REPEAT.getMessage());
+            }
+        }
+        // 更新
+        pmsPublishingHouseMapper.updateHouse(publishingHouse);
+        return CommonResult.success(null);
+    }
+
 }

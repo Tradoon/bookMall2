@@ -15,4 +15,6 @@ public interface PmsPublishingHouseService {
     CommonResult insertPublishingHouse(PublishingHouse publishingHouse);
 
     CommonResult deletePublishHouse(Long id);
+
+    CommonResult updatePublishHouse(Long id, PublishingHouse publishingHouse);
 }

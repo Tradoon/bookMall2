@@ -41,4 +41,10 @@ public class PmsPublishingHouseController {
 
     }
 
+    @ApiOperation(value = "更新出版社信息",httpMethod = "POST")
+    @PostMapping("/update/{id}")
+    public CommonResult  update (@PathVariable("id")Long id,@RequestBody PublishingHouse publishingHouse){
+        return pmsPublishingHouseService.updatePublishHouse(id,publishingHouse);
+    }
+
 }
