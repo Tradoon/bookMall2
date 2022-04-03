@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tradoon.bookMall.dao.PmsPublishingHouseMapper">
+
+
+    <select id="houseList" resultType="com.tradoon.bookMall.model.PulishingHouse">
+        SELECT
+            id,
+            publishhouse_name,
+            city,
+            type,
+            isbn,
+            csbn,
+            create_time,
+            update_time,
+            remark,
+            status
+        FROM
+            pms_publishinghouse
+        WHERE
+                    status = 1
+        <if test="keyword!=null">
+            AND publishhouse_name LIKE concat( '%',#{keyword}, '%' )
+           OR isbn LIKE concat( '%',#{keyword}, '%' )
+           OR csbn LIKE concat( '%',#{keyword}, '%' )
+            OR city LIKE concat( '%', #{keyword}, '%' )
+
+        </if>
+
+    </select>
+</mapper>

@@ -102,7 +102,7 @@ public class UmsAdminController {
         return adminService.list(keyword, pageSize, pageNum);
 
     }
-//TODO 给用户分配角色
+//TODO 给用户分配角色,自测没结束
     @ApiOperation(value = "给用户分配角色",httpMethod = "POST")
     @PostMapping("/role/update")
     public CommonResult updateRole(@RequestParam("adminId")Long adminId,
@@ -110,7 +110,7 @@ public class UmsAdminController {
         return adminService.updateRole(adminId,roleIds);
     }
 
-    // 获取用户的角色
+    //todo 获取用户的角色
 
 
 
