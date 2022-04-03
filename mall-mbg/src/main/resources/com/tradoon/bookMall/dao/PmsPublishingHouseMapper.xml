@@ -1,9 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tradoon.bookMall.dao.PmsPublishingHouseMapper">
+    <insert id="insertPublishingHouse">
+        INSERT INTO pms_publishinghouse (
+        <trim suffixOverrides=",">
+            <if test="id!=null">
+                id,
+            </if>
+        <if test=" publishhouseName!=null">
+            publishhouse_name,
+        </if>
+
+        <if test="city !=null">
+            city,
+        </if>
+        <if test="type !=null">
+            type,
+        </if>
+        <if test="isbn !=null">
+            isbn,
+        </if>
+        <if test="csbn !=null">
+            csbn,
+        </if>
+        <if test="createTime !=null">
+            create_time,
+        </if>
+        <if test="updateTime !=null">
+            update_time,
+        </if>
+        <if test="remark!=null">
+            remark
+        </if>
+
+        </trim>)
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="id!=null">
+               #{id},
+            </if>
+            <if test=" publishhouseName!=null">
+                #{publishhouseName},
+            </if>
+
+            <if test="city !=null">
+                #{city},
+            </if>
+            <if test="type !=null">
+                #{type},
+            </if>
+            <if test="isbn !=null">
+                #{isbn},
+            </if>
+            <if test="csbn !=null">
+                #{csbn},
+            </if>
+            <if test="createTime !=null">
+                #{createTime},
+            </if>
+            <if test="updateTime !=null">
+                #{updateTime},
+            </if>
+            <if test="remark!=null">
+                #{remark}
+            </if>
+
+        </trim>
+        )
+    </insert>
 
 
-    <select id="houseList" resultType="com.tradoon.bookMall.model.PulishingHouse">
+    <select id="houseList" resultType="com.tradoon.bookMall.model.PublishingHouse">
         SELECT
             id,
             publishhouse_name,

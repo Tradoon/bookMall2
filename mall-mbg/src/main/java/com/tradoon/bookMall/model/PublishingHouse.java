@@ -17,7 +17,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PulishingHouse {
+public class PublishingHouse {
 
     @ApiModelProperty("出版社id")
     private Long id ;
@@ -28,6 +28,7 @@ public class PulishingHouse {
     @ApiModelProperty("出版社所在城市")
     private String city;
 
+    // 前后端协定type的值,才能得到对应的type
     @ApiModelProperty("出版社类型")
     private Integer type;
 
@@ -43,7 +44,7 @@ public class PulishingHouse {
     @ApiModelProperty("统一书号")
     private  String csbn;
 
-    @ApiModelProperty("")
+    @ApiModelProperty("创建时间")
     private Date  createTime;
 
     @ApiModelProperty("更改时间")

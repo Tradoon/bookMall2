@@ -1,6 +1,7 @@
 package com.tradoon.bookMall.dao;
 
-import com.tradoon.bookMall.model.PulishingHouse;
+import com.tradoon.bookMall.api.CommonResult;
+import com.tradoon.bookMall.model.PublishingHouse;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -13,5 +14,7 @@ import java.util.List;
  */
 @Mapper
 public interface PmsPublishingHouseMapper {
-    List<PulishingHouse> houseList(@Param("keyword") String keyword);
+    List<PublishingHouse> houseList(@Param("keyword") String keyword);
+
+    void insertPublishingHouse(PublishingHouse publishingHouse);
 }
