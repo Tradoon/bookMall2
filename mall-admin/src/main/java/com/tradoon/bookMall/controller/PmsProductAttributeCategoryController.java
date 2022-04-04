@@ -38,6 +38,13 @@ public class PmsProductAttributeCategoryController {
     }
 
 
+    @ApiOperation("修改商品属性分类")
+    @PostMapping(value = "/update/{id}")
+    public CommonResult update(@PathVariable Long id, @RequestParam String name) {
+        return  pmsAbCService.update(id, name);
+
+    }
+
 
 
 

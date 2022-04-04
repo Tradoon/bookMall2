@@ -26,4 +26,9 @@ public interface PmsProductAttributeCategoryMapper {
      */
     void insertAttribute(PmsProductAttributeCategory pmsProductAttributeCategory);
 
+    /**
+     * 更新
+     * @param pmsAC
+     */
+    void updateAC(PmsProductAttributeCategory pmsAC);
 }

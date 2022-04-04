@@ -13,4 +13,6 @@ public interface PmsProductAttributeCategoryService {
     CommonResult create(String name);
 
     CommonResult<CommonPage<PmsProductAttributeCategory>> selectList(Integer pageNum, Integer pageSize);
+
+    CommonResult update(Long id, String name);
 }

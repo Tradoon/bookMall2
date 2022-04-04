@@ -34,14 +34,41 @@
         </trim>
         )
     </insert>
+    <update id="updateAC">
+        update pms_product_attribute_category
+        <set>
+            <if test="name!=null">
+                name=#{name},
+            </if>
+            <if test="paramCount!=null">
+                 param_count= #{paramCount},
+            </if>
+            <if test="attributeCount!=null">
+                 attribute_count=#{attributeCount}
+            </if>
+        </set>
+            where
+            id=#{id}
+    </update>
 
-    <select id="findByName" resultType="com.tradoon.bookMall.model.PmsProductAttributeCategory">
+    <select id="findByList" resultType="com.tradoon.bookMall.model.PmsProductAttributeCategory">
         select `id` ,
                `name` ,
                `attribute_count` ,
                `param_count`
         from pms_product_attribute_category
-        where name=#{name}
-        limit 1
+        <where>
+            <if test="name!=null">
+                name=#{name}
+            </if>
+            <if test="paramCount!=null">
+               and param_count= #{paramCount}
+            </if>
+            <if test="attributeCount!=null">
+                and attribute_count=#{attributeCount}
+            </if>
+        </where>
+
     </select>
+
 </mapper>

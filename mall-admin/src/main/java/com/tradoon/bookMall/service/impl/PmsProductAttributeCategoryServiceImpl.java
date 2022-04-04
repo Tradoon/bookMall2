@@ -65,4 +65,29 @@ public class PmsProductAttributeCategoryServiceImpl implements PmsProductAttribu
 
         return CommonResult.success(new CommonPage<>(info));
     }
+
+    @Override
+    public CommonResult update(Long id, String name) {
+        // 判断是否重复
+        PmsProductAttributeCategory pmsAC = new PmsProductAttributeCategory();
+        if(StringUtils.isNotBlank(name)){
+            pmsAC.setName(name);
+            List<PmsProductAttributeCategory> byList = pmsACMapper.findByList(pmsAC);
+            if(!byList.isEmpty()){
+                for(PmsProductAttributeCategory acItem:byList){
+                    if(!id.equals(acItem.getId())){
+                        return CommonResult.failed(ResultCode.ATTRIBUTTE_NAME_REPEAT.getCode(),ResultCode.ATTRIBUTTE_NAME_REPEAT.getMessage());
+                    }
+                }
+            }else{
+                if(id!=null){
+                    pmsAC.setId(id);
+                    pmsACMapper.updateAC(pmsAC);
+                }
+            }
+        }
+
+        //更新
+        return CommonResult.success(null);
+    }
 }
