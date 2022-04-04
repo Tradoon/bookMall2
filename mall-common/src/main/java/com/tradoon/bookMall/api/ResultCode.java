@@ -18,9 +18,12 @@ public enum ResultCode {
     FORBIDDEN(3002,"用户没有该权限"),
 
 //400x project 相关错误
-    PUBLISHINGHOUSE_REPEAT(4001,"出版社名/isbn/cabn已存在");
+    PUBLISHINGHOUSE_REPEAT(4001,"出版社名/isbn/cabn已存在"),
     //枚举依赖构造函数
     //枚举之间是，分割
+    //410x 属性相关错误
+    ATTRIBUTTE_NAME_REPEAT(4101,"属性分类已经存在");
+    //411x 分类相关错误
     //todo 还待增加
 
     private long code;
