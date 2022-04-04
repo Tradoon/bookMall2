@@ -5,6 +5,8 @@ import com.tradoon.bookMall.api.CommonResult;
 import com.tradoon.bookMall.dto.PmsProductAttributeParam;
 import com.tradoon.bookMall.model.PmsProductAttribute;
 
+import java.util.List;
+
 /**
  * author:tradoon
  * desciption:
@@ -16,4 +18,6 @@ public interface PmsProductAttributeService {
     CommonResult<CommonPage<PmsProductAttribute>> getList(Long id, Integer pageSize, Integer pageNum,Integer type);
 
     CommonResult update(Long id, PmsProductAttributeParam productAttributeParam);
+
+    CommonResult delete(List<Long> ids);
 }

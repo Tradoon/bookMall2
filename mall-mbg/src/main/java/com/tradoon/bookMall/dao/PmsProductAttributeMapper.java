@@ -2,6 +2,7 @@ package com.tradoon.bookMall.dao;
 
 import com.tradoon.bookMall.model.PmsProductAttribute;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -30,6 +31,12 @@ public interface PmsProductAttributeMapper {
      * @param pmsParam
      */
     void update(PmsProductAttribute pmsParam);
+
+    /**
+     * 删除属性信息
+     * @param id
+     */
+    void delAttribute(@Param("acid") Long acid,@Param("id") List<Long> id);
 
 
 }

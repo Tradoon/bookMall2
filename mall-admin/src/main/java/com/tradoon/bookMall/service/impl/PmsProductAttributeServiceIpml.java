@@ -87,4 +87,13 @@ public class PmsProductAttributeServiceIpml implements PmsProductAttributeServic
         }
         return CommonResult.success(null);
     }
+
+    @Override
+    public CommonResult delete(List<Long> ids) {
+        if(ids.isEmpty()){
+            return CommonResult.failed(ResultCode.ATTRIBUTTE_NAME_INPUT_NULL.getMessage());
+        }
+        pmsAMapper.delAttribute(null,ids);
+        return CommonResult.success(null);
+    }
 }

@@ -47,5 +47,13 @@ public class PmsProductAttributeController {
         return pmsAS.update(id, productAttributeParam);
     }
 
+    @ApiOperation("批量删除商品属性")
+    @PostMapping(value = "/delete")
+    public CommonResult delete(@RequestParam List<Long> ids) {
+        return  pmsAS.delete(ids);
+
+    }
+
+
 
 }

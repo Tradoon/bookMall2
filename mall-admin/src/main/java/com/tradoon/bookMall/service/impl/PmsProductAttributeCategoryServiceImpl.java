@@ -7,6 +7,7 @@ import com.tradoon.bookMall.api.CommonPage;
 import com.tradoon.bookMall.api.CommonResult;
 import com.tradoon.bookMall.api.ResultCode;
 import com.tradoon.bookMall.dao.PmsProductAttributeCategoryMapper;
+import com.tradoon.bookMall.dao.PmsProductAttributeMapper;
 import com.tradoon.bookMall.model.PmsProductAttributeCategory;
 import com.tradoon.bookMall.service.PmsProductAttributeCategoryService;
 import com.tradoon.bookMall.utils.SnowflakeConfig;
@@ -26,6 +27,8 @@ import java.util.Objects;
 public class PmsProductAttributeCategoryServiceImpl implements PmsProductAttributeCategoryService {
 @Autowired
     PmsProductAttributeCategoryMapper pmsACMapper;
+@Autowired
+    PmsProductAttributeMapper pmsAMapper;
 @Autowired
     SnowflakeConfig snowflakeConfig;
 
@@ -98,7 +101,7 @@ public class PmsProductAttributeCategoryServiceImpl implements PmsProductAttribu
             return CommonResult.failed(ResultCode.ATTRIBUTTE_NAME_INPUT_NULL.getCode(), ResultCode.ATTRIBUTTE_NAME_INPUT_NULL.getMessage());
         }
         pmsACMapper.delAC(id);
-        pmsACMapper.delAttribute(id);
+        pmsAMapper.delAttribute(id,null);
         //删除attribute和category联合数据
         return CommonResult.success(null);
     }

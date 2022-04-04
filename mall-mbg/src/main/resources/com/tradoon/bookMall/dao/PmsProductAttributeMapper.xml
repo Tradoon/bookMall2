@@ -126,6 +126,23 @@
         where
         id=#{id}
     </update>
+    <delete id="delAttribute">
+        <if test="acid!=null||id!=null">
+        delete from pms_product_attribute
+        <where>
+              <if test="acid!=null">
+              product_attribute_category_id=#{acid}
+              </if>
+              <if test="id.size!=0">
+                  and id in
+                <foreach collection="id" index="index" separator="," open="(" close=")" item="item">
+                    #{item}
+                </foreach>
+              </if>
+        </where>
+        </if>
+
+    </delete>
 
     <select id="selectByInfo" resultType="com.tradoon.bookMall.model.PmsProductAttribute">
         select  `id`,
