@@ -4,6 +4,8 @@ import com.tradoon.bookMall.model.PmsProductAttributeCategory;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * author:tradoon
  * desciption:
@@ -13,14 +15,15 @@ import org.apache.ibatis.annotations.Param;
 public interface PmsProductAttributeCategoryMapper {
     /**
      * 根据名字找到对应对象
-     * @param name
+     * @param pmsAC
      * @return
      */
-    PmsProductAttributeCategory findByName(@Param("name") String name);
+    List<PmsProductAttributeCategory> findByList(PmsProductAttributeCategory pmsAC);
 
     /**
      * 插入属性
      * @param pmsProductAttributeCategory
      */
     void insertAttribute(PmsProductAttributeCategory pmsProductAttributeCategory);
+
 }
