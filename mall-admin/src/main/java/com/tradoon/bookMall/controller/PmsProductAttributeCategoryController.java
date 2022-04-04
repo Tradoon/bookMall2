@@ -45,7 +45,11 @@ public class PmsProductAttributeCategoryController {
 
     }
 
-
+    @ApiOperation("删除单个商品属性分类")
+    @GetMapping(value = "/delete/{id}")
+    public CommonResult delete(@PathVariable Long id) {
+        return pmsAbCService.delAC(id);
+    }
 
 
 

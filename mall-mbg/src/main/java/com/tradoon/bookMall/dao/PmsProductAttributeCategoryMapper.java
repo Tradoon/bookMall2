@@ -31,4 +31,16 @@ public interface PmsProductAttributeCategoryMapper {
      * @param pmsAC
      */
     void updateAC(PmsProductAttributeCategory pmsAC);
+
+    /**
+     * 删除attribute-Catgroy
+     * @param id
+     */
+    void delAC(@Param("id") Long id);
+
+    /**
+     * 删除对应的attribute
+     * @param id
+     */
+    void delAttribute(@Param("acid") Long id);
 }

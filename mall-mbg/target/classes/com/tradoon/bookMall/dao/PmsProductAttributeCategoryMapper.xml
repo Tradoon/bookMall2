@@ -34,6 +34,7 @@
         </trim>
         )
     </insert>
+
     <update id="updateAC">
         update pms_product_attribute_category
         <set>
@@ -50,6 +51,15 @@
             where
             id=#{id}
     </update>
+    <delete id="delAC">
+        delete from pms_product_attribute_category
+        where id=#{id}
+    </delete>
+
+    <delete id="delAttribute">
+        delete from pms_product_attribute
+        where product_attribute_category_id=#{acid}
+    </delete>
 
     <select id="findByList" resultType="com.tradoon.bookMall.model.PmsProductAttributeCategory">
         select `id` ,

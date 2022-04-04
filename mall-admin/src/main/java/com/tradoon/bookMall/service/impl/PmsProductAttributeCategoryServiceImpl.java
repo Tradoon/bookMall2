@@ -90,4 +90,16 @@ public class PmsProductAttributeCategoryServiceImpl implements PmsProductAttribu
         //更新
         return CommonResult.success(null);
     }
+
+    @Override
+    public CommonResult delAC(Long id) {
+// 删除本身数据
+        if(Objects.isNull(id)){
+            return CommonResult.failed(ResultCode.ATTRIBUTTE_NAME_INPUT_NULL.getCode(), ResultCode.ATTRIBUTTE_NAME_INPUT_NULL.getMessage());
+        }
+        pmsACMapper.delAC(id);
+        pmsACMapper.delAttribute(id);
+        //删除attribute和category联合数据
+        return CommonResult.success(null);
+    }
 }
