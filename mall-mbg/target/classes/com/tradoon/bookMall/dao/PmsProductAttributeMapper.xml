@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tradoon.bookMall.dao.PmsProductAttributeMapper">
+    <insert id="create">
+
+        INSERT INTO pms_product_attribute (
+            <trim suffixOverrides=",">
+                <if test="id!=null">
+                `id`,
+                </if>
+                <if test="productAttributeCategoryId!=null">
+                    product_attribute_category_id,
+                </if>
+                <if test="name!=null">
+                    name,
+                </if>
+                <if test="selectType!=null">
+                    select_type,
+                </if>
+                <if test="inputType!=null">
+                    input_type,
+                </if>
+                 <if test="inputList!=null">
+                     input_list,
+                 </if>
+                 <if test="sort!=null">
+                     sort,
+                 </if>
+                 <if test="filterType!=null">
+                     filter_type,
+                 </if>
+                <if test="searchType!=null">
+                    search_type,
+                </if>
+                <if test="relatedStatus!=null">
+                    related_status,
+                </if>
+                 <if test="handAddStatus!=null">
+                     hand_add_status,
+                 </if>
+                <if test="type!=null">
+                    type
+                </if>
+            </trim>)
+
+        VALUES
+        (
+        <trim suffixOverrides=",">
+            <if test="id!=null">
+                #{id},
+            </if>
+            <if test="productAttributeCategoryId!=null">
+                #{productAttributeCategoryId},
+            </if>
+            <if test="name!=null">
+                #{name},
+            </if>
+            <if test="selectType!=null">
+                #{selectType},
+            </if>
+            <if test="inputType!=null">
+                #{inputType},
+            </if>
+            <if test="inputList!=null">
+                #{inputList},
+            </if>
+            <if test="sort!=null">
+                #{sort},
+            </if>
+            <if test="filterType!=null">
+                #{filterType},
+            </if>
+            <if test="searchType!=null">
+                #{searchType},
+            </if>
+            <if test="relatedStatus!=null">
+                #{relatedStatus},
+            </if>
+            <if test="handAddStatus!=null">
+                #{handAddStatus},
+            </if>
+            <if test="type!=null">
+                #{type}
+            </if>
+        </trim>)
+
+    </insert>
+
+    <select id="selectByInfo" resultType="com.tradoon.bookMall.model.PmsProductAttribute">
+        select  `id`,
+                `product_attribute_category_id` ,
+                `name` ,
+                `select_type` ,
+                `input_type`,
+                `input_list` ,
+                `sort` ,
+                `filter_type`,
+                `search_type`,
+                `related_status`,
+                `hand_add_status`,
+                `type`
+        from pms_product_attribute
+        <where>
+            <if test="name!=null">
+                name=#{name}
+            </if>
+            <if test="inputList!=null">
+                and input_list=#{inputList}
+            </if>
+            <if test="productAttributeCategoryId!=null">
+                and product_attribute_category_id=#{productAttributeCategoryId}
+            </if>
+        </where>
+    </select>
+</mapper>

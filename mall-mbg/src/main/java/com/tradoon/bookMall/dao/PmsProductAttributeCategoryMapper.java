@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * author:tradoon
- * desciption:
+ * desciption:商品属性接收参数
  * date:2022/ / /
  */
 @Mapper
