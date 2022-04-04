@@ -85,6 +85,47 @@
         </trim>)
 
     </insert>
+    <update id="update">
+        update pms_product_attribute
+        <set>
+            <if test="productAttributeCategoryId!=null">
+                product_attribute_category_id= #{productAttributeCategoryId},
+            </if>
+            <if test="name!=null">
+               name= #{name},
+            </if>
+            <if test="selectType!=null">
+               select_type= #{selectType},
+            </if>
+            <if test="inputType!=null">
+                input_type=#{inputType},
+            </if>
+            <if test="inputList!=null">
+                input_list= #{inputList},
+            </if>
+            <if test="sort!=null">
+                sort=#{sort},
+            </if>
+            <if test="filterType!=null">
+                filter_type= #{filterType},
+            </if>
+            <if test="searchType!=null">
+                search_type=#{searchType},
+            </if>
+            <if test="relatedStatus!=null">
+                related_status=#{relatedStatus},
+            </if>
+            <if test="handAddStatus!=null">
+                hand_add_status= #{handAddStatus},
+            </if>
+            <if test="type!=null">
+                type= #{type}
+            </if>
+
+        </set>
+        where
+        id=#{id}
+    </update>
 
     <select id="selectByInfo" resultType="com.tradoon.bookMall.model.PmsProductAttribute">
         select  `id`,
@@ -110,6 +151,10 @@
             <if test="productAttributeCategoryId!=null">
                 and product_attribute_category_id=#{productAttributeCategoryId}
             </if>
+            <if test="type!=null">
+                and type=#{type}
+            </if>
         </where>
     </select>
+
 </mapper>

@@ -24,4 +24,12 @@ public interface PmsProductAttributeMapper {
      * @param pmsParam
      */
     void create(PmsProductAttribute pmsParam);
+
+    /**
+     * 更改属性信息
+     * @param pmsParam
+     */
+    void update(PmsProductAttribute pmsParam);
+
+
 }
