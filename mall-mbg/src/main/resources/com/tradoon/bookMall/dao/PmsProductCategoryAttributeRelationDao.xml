@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tradoon.bookMall.dao.PmsProductCategoryAttributeRelationDao">
+
+    <insert id="insertRelation">
+        insert into pms_product_category_attribute_relation(id,product_category_id,product_attribute_id)
+        values
+        <trim suffixOverrides=",">
+            <foreach collection="ppacList" item="item" index="index">
+                (
+            <if test="item.id!=null">
+                #{item.id},
+            </if>
+            <if test="item.productCategoryId!=null">
+                #{item.productCategoryId},
+            </if>
+            <if test="item.productAttributeId">
+                #{item.productAttributeId}
+            </if>
+            ),
+            </foreach>
+        </trim>
+    </insert>
+</mapper>
