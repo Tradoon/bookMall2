@@ -1,10 +1,15 @@
 package com.tradoon.bookMall.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.tradoon.bookMall.api.CommonPage;
 import com.tradoon.bookMall.api.CommonResult;
 import com.tradoon.bookMall.api.ResultCode;
 import com.tradoon.bookMall.dao.PmsProductCategoryAttributeRelationDao;
 import com.tradoon.bookMall.dao.PmsProductCategoryMapper;
 import com.tradoon.bookMall.dto.PmsProductCategoryParam;
+import com.tradoon.bookMall.model.PmsProductAttributeCategory;
 import com.tradoon.bookMall.model.PmsProductCategory;
 import com.tradoon.bookMall.model.PmsProductCategoryAttributeRelation;
 import com.tradoon.bookMall.service.PmsProductCategoryService;
@@ -16,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * author:tradoon
@@ -80,5 +86,24 @@ public class PmsProductCategoryServiceImpl implements PmsProductCategoryService 
 
 
         return CommonResult.success(null);
+    }
+
+    @Override
+    public CommonResult<CommonPage<PmsProductCategory>> getList(Long parentId, Integer pageSize, Integer pageNum) {
+        Page<Object> pageHelper = PageHelper.startPage(pageNum, pageSize);
+        PmsProductCategory pmsPC=new PmsProductCategory();
+        if(Objects.isNull(parentId)){
+            pmsPC.setParentId(0L);
+        }else{
+            pmsPC.setParentId(parentId);
+        }
+        List<PmsProductCategory> byInfo = pmsProductCategoryMapper.findByInfo(pmsPC);
+        PageInfo<PmsProductCategory> pmsPageInfo = new PageInfo<>(byInfo);
+        pmsPageInfo.setPageNum(pageHelper.getPageNum());
+        pmsPageInfo.setPageSize(pageHelper.getPageSize());
+        pmsPageInfo.setPages(pageHelper.getPages());
+        pmsPageInfo.setTotal(pageHelper.getTotal());
+
+        return CommonResult.success(new CommonPage<>(pmsPageInfo));
     }
 }

@@ -94,18 +94,18 @@
 
     <select id="findByInfo" resultType="com.tradoon.bookMall.model.PmsProductCategory">
         SELECT
-            `id`,
-            `parent_id`,
-            `name`,
-            `level`,
-            `product_count`,
-            `product_unit`,
-            `nav_status`,
-            `show_status`,
-            `sort`,
-            `icon`,
-            `keywords`,
-            `description`
+            `id` as id,
+            `parent_id` as parentId ,
+            `name` as name,
+            `level` as level ,
+            `product_count` as productCount,
+            `product_unit` as productUnit,
+            `nav_status` as navStatus,
+            `show_status` as showStatus ,
+            `sort` as sort,
+            `icon` as icon,
+            `keywords` as keywords,
+            `description` as description
         FROM
             pms_product_category
         <where>
