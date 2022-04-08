@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * author:tradoon
  * desciption: 商品分类相关接口
@@ -38,4 +40,19 @@ public class PmsProductCategoryController {
         return pmsProductCategoryService.getList(parentId,pageSize,pageNum);
 
     }
+    @ApiOperation("修改显示状态")
+    @PostMapping( "/update/showStatus")
+    public CommonResult updateShowStatus(@RequestParam("ids") List<Long> ids, @RequestParam("showStatus") Integer showStatus) {
+       return pmsProductCategoryService.updateShowStatus(ids, showStatus);
+
+    }
+
+    @ApiOperation("修改导航栏状态")
+    @PostMapping( "/update/navStatus")
+    public CommonResult updateNavStatus(@RequestParam("ids") List<Long> ids, @RequestParam("navStatus") Integer navStatus) {
+        return pmsProductCategoryService.updateNavStatus(ids, navStatus);
+
+    }
+
+
 }

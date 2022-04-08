@@ -2,6 +2,7 @@ package com.tradoon.bookMall.dao;
 
 import com.tradoon.bookMall.model.PmsProductCategory;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -24,4 +25,11 @@ public interface PmsProductCategoryMapper {
      * @param pmsProductCategory
      */
     void insertInfo(PmsProductCategory pmsProductCategory);
+
+    /**
+     * 更改相关信息
+     * @param ids
+     * @param pmspc
+     */
+    void updateByInfo(@Param("ids") List<Long> ids, @Param("pmspc") PmsProductCategory pmspc);
 }

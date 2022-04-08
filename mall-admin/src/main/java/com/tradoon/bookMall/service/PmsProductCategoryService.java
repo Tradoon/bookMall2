@@ -7,6 +7,8 @@ import com.tradoon.bookMall.model.PmsProductAttributeCategory;
 import com.tradoon.bookMall.model.PmsProductCategory;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * author:tradoon
  * desciption:
@@ -18,4 +20,8 @@ public interface PmsProductCategoryService {
     CommonResult create(PmsProductCategoryParam param);
 
     CommonResult<CommonPage<PmsProductCategory>> getList(Long parentId, Integer pageSize, Integer pageNum);
+
+    CommonResult updateShowStatus(List<Long> ids, Integer showStatus);
+
+    CommonResult updateNavStatus(List<Long> ids, Integer navStatus);
 }

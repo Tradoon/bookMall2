@@ -23,7 +23,7 @@ public enum ResultCode {
     //枚举之间是，分割
     //410x 属性相关错误
     ATTRIBUTTE_NAME_REPEAT(4101,"属性分类已经存在"),
-    ATTRIBUTTE_NAME_INPUT_NULL(4102,"输入属性分类为空")
+    ATTRIBUTTE_NAME_INPUT_NULL(4102,"输入为空")
     ;
     //411x 分类相关错误
     //todo 还待增加

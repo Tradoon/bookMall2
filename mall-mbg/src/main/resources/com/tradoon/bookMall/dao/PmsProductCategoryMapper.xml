@@ -91,6 +91,56 @@
         </trim>
         )
     </insert>
+    <update id="updateByInfo">
+        update pms_product_category
+        <set>
+            <if test="pmspc.parentId!=null">
+                `parent_id`=#{pmspc.parentId},
+            </if>
+            <if test="pmspc.name!=null">
+                `name`=#{pmspc.name},
+            </if>
+            <if test="pmspc.level!=null">
+                `level`=#{pmspc.level},
+            </if>
+            <if test="pmspc.productCount!=null">
+                `product_count`=#{pmspc.productCount},
+            </if>
+            <if test="pmspc.productUnit!=null">
+                `product_unit`=#{pmspc.productUnit},
+            </if>
+            <if test="pmspc.navStatus!=null">
+                `nav_status`=#{pmspc.navStatus},
+            </if>
+            <if test="pmspc.showStatus!=null">
+                `show_status`=#{pmspc.showStatus},
+            </if>
+
+            <if test="pmspc.sort!=null">
+                `sort`=#{pmspc.sort},
+            </if>
+
+            <if test="pmspc.icon!=null">
+                `icon`=#{pmspc.icon},
+            </if>
+
+            <if test="pmspc.keywords!=null">
+                `keywords`=#{pmspc.keywords},
+            </if>
+
+            <if test="pmspc.description!=null">
+                `description`=#{pmspc.description}
+            </if>
+        </set>
+            <where>
+                <if test="ids.size!=0">
+                    id in
+                <foreach collection="ids" index="index" open="(" close=")" separator="," item="item">
+                    #{item}
+                </foreach>
+                </if>
+            </where>
+    </update>
 
     <select id="findByInfo" resultType="com.tradoon.bookMall.model.PmsProductCategory">
         SELECT

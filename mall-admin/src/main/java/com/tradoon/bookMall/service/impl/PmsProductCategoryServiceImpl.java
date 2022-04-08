@@ -106,4 +106,27 @@ public class PmsProductCategoryServiceImpl implements PmsProductCategoryService 
 
         return CommonResult.success(new CommonPage<>(pmsPageInfo));
     }
+
+    @Override
+    public CommonResult updateShowStatus(List<Long> ids, Integer showStatus) {
+        if(ids.isEmpty()||Objects.isNull(showStatus)){
+            return CommonResult.failed(ResultCode.ATTRIBUTTE_NAME_INPUT_NULL.getCode(), ResultCode.ATTRIBUTTE_NAME_INPUT_NULL.getMessage());
+        }
+        PmsProductCategory pmsProductCategory = new PmsProductCategory();
+        pmsProductCategory.setShowStatus(showStatus);
+        pmsProductCategoryMapper.updateByInfo(ids,pmsProductCategory);
+
+        return CommonResult.success(null);
+    }
+
+    @Override
+    public CommonResult updateNavStatus(List<Long> ids, Integer navStatus) {
+        if(ids.isEmpty()||navStatus==null){
+            return CommonResult.failed(ResultCode.ATTRIBUTTE_NAME_INPUT_NULL.getCode(), ResultCode.ATTRIBUTTE_NAME_INPUT_NULL.getMessage());
+        }
+        PmsProductCategory pmsProductCategory = new PmsProductCategory();
+        pmsProductCategory.setNavStatus(navStatus);
+        pmsProductCategoryMapper.updateByInfo(ids,pmsProductCategory);
+        return CommonResult.success(null);
+    }
 }
