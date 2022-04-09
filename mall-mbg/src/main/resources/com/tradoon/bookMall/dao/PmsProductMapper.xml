@@ -287,153 +287,62 @@
 
         </trim>
     </insert>
+
     <select id="findBySelective" resultType="com.tradoon.bookMall.model.PmsProduct">
         select
-        <if test="id != null">
             id as id,
-        </if>
-        <if test="brandId != null">
             brand_id as brandId ,
-        </if>
-        <if test="brandId != null">
             publish_house_id  as publishHouseId,
-        </if>
-        <if test="productCategoryId != null">
             product_category_id as productCategoryId,
-        </if>
-        <if test="feightTemplateId != null">
             feight_template_id as feightTemplateId,
-        </if>
-        <if test="productAttributeCategoryId != null">
             product_attribute_category_id as productAttributeCategoryId,
-        </if>
-        <if test="name != null">
             name as name ,
-        </if>
-        <if test="pic != null">
             pic as pic,
-        </if>
-        <if test="productSn != null">
             product_sn as productSn,
-        </if>
-        <if test="deleteStatus != null">
             delete_status as deleteStatus,
-        </if>
-        <if test="publishStatus != null">
             publish_status as publishStatus,
-        </if>
-        <if test="newStatus != null">
             new_status as newStatus,
-        </if>
-        <if test="recommandStatus != null">
             recommand_status as recommandStatus,
-        </if>
-        <if test="verifyStatus != null">
             verify_status as verifyStatus,
-        </if>
-        <if test="sort != null">
             sort as sort,
-        </if>
-        <if test="sale != null">
             sale as sale,
-        </if>
-        <if test="price != null">
             price as price,
-        </if>
-        <if test="promotionPrice != null">
             promotion_price as promotionPrice,
-        </if>
-        <if test="giftGrowth != null">
             gift_growth as giftGrowth,
-        </if>
-        <if test="giftPoint != null">
             gift_point as giftPoint,
-        </if>
-        <if test="usePointLimit != null">
             use_point_limit as usePointLimit,
-        </if>
-        <if test="subTitle != null">
             sub_title as subTitle,
-        </if>
-        <if test="originalPrice != null">
             original_price as originalPrice,
-        </if>
-        <if test="stock != null">
             stock as stock,
-        </if>
-        <if test="lowStock != null">
             low_stock as lowStock,
-        </if>
-        <if test="unit != null">
             unit as unit,
-        </if>
-        <if test="weight != null">
             weight as weight,
-        </if>
-        <if test="previewStatus != null">
             preview_status as previewStatus,
-        </if>
-        <if test="serviceIds != null">
             service_ids as serviceIds,
-        </if>
-        <if test="keywords != null">
             keywords as keywords,
-        </if>
-        <if test="note != null">
             note as note,
-        </if>
-        <if test="albumPics != null">
             album_pics as albumPics,
-        </if>
-        <if test="detailTitle != null">
             detail_title as detailTitle,
-        </if>
-        <if test="promotionStartTime != null">
             promotion_start_time as promotionStartTime,
-        </if>
-        <if test="promotionEndTime != null">
             promotion_end_time as promotionEndTime,
-        </if>
-        <if test="promotionPerLimit != null">
             promotion_per_limit as promotionPerLimit,
-        </if>
-        <if test="promotionType != null">
             promotion_type as promotionType,
-        </if>
-        <if test="brandName != null">
             brand_name as brandName,
-        </if>
-        <if test="brandName != null">
             publish_house_name as publishHouseName ,
-        </if>
-        <if test="productCategoryName != null">
             product_category_name as productCategoryName ,
-        </if>
-        <if test="description != null">
             description as description,
-        </if>
-        <if test="detailDesc != null">
             detail_desc as detailDesc,
-        </if>
-        <if test="detailHtml != null">
             detail_html as detailHtml,
-        </if>
-        <if test="detailMobileHtml != null">
             detail_mobile_html as detailMobileHtml,
-        </if>
-        <if test="createTime!=null">
             create_time as createTime,
-        </if>
-        <if test="updateTime!=null">
             update_time as updateTime
-        </if>
         from pms_product
         <where>
             <if test="publishStatus != null">
                 publish_status=#{publishStatus}
             </if>
             <if test="verifyStatus != null">
-                and verify_status=#{verifyStatus},
+                and verify_status=#{verifyStatus}
             </if>
             <if test="keywords != null">
                and  keywords like concat('%',#{keywords},'%')
