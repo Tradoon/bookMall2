@@ -5,8 +5,14 @@
     <insert id="insertSelective">
         insert into pms_product
         <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
             <if test="brandId != null">
                 brand_id,
+            </if>
+            <if test="brandId != null">
+                publish_house_id,
             </if>
             <if test="productCategoryId != null">
                 product_category_id,
@@ -113,6 +119,9 @@
             <if test="brandName != null">
                 brand_name,
             </if>
+            <if test="brandName != null">
+                publish_house_name,
+            </if>
             <if test="productCategoryName != null">
                 product_category_name,
             </if>
@@ -128,8 +137,21 @@
             <if test="detailMobileHtml != null">
                 detail_mobile_html,
             </if>
+            <if test="createTime!=null">
+                create_time,
+            </if>
+            <if test="updateTime!=null">
+                update_time
+            </if>
+
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="brandId != null">
+                #{brandId,jdbcType=BIGINT},
+            </if>
             <if test="brandId != null">
                 #{brandId,jdbcType=BIGINT},
             </if>
@@ -238,6 +260,9 @@
             <if test="brandName != null">
                 #{brandName,jdbcType=VARCHAR},
             </if>
+            <if test="brandName != null">
+                #{brandName,jdbcType=VARCHAR},
+            </if>
             <if test="productCategoryName != null">
                 #{productCategoryName,jdbcType=VARCHAR},
             </if>
@@ -253,6 +278,88 @@
             <if test="detailMobileHtml != null">
                 #{detailMobileHtml,jdbcType=LONGVARCHAR},
             </if>
+            <if test="createTime!=null">
+                #{createTime,jdbcType=DATE},
+            </if>
+            <if test="updateTime!=null">
+                #{updateTime,jdbcType=DATE}
+            </if>
+
         </trim>
     </insert>
+
+    <select id="findBySelective" resultType="com.tradoon.bookMall.model.PmsProduct">
+        select
+            id as id,
+            brand_id as brandId ,
+            publish_house_id  as publishHouseId,
+            product_category_id as productCategoryId,
+            feight_template_id as feightTemplateId,
+            product_attribute_category_id as productAttributeCategoryId,
+            name as name ,
+            pic as pic,
+            product_sn as productSn,
+            delete_status as deleteStatus,
+            publish_status as publishStatus,
+            new_status as newStatus,
+            recommand_status as recommandStatus,
+            verify_status as verifyStatus,
+            sort as sort,
+            sale as sale,
+            price as price,
+            promotion_price as promotionPrice,
+            gift_growth as giftGrowth,
+            gift_point as giftPoint,
+            use_point_limit as usePointLimit,
+            sub_title as subTitle,
+            original_price as originalPrice,
+            stock as stock,
+            low_stock as lowStock,
+            unit as unit,
+            weight as weight,
+            preview_status as previewStatus,
+            service_ids as serviceIds,
+            keywords as keywords,
+            note as note,
+            album_pics as albumPics,
+            detail_title as detailTitle,
+            promotion_start_time as promotionStartTime,
+            promotion_end_time as promotionEndTime,
+            promotion_per_limit as promotionPerLimit,
+            promotion_type as promotionType,
+            brand_name as brandName,
+            publish_house_name as publishHouseName ,
+            product_category_name as productCategoryName ,
+            description as description,
+            detail_desc as detailDesc,
+            detail_html as detailHtml,
+            detail_mobile_html as detailMobileHtml,
+            create_time as createTime,
+            update_time as updateTime
+        from pms_product
+        <where>
+            <if test="publishStatus != null">
+                publish_status=#{publishStatus}
+            </if>
+            <if test="verifyStatus != null">
+                and verify_status=#{verifyStatus}
+            </if>
+            <if test="keywords != null">
+               and  keywords like concat('%',#{keywords},'%')
+            </if>
+            <if test="productSn != null">
+               and  product_sn=#{productSn}
+            </if>
+            <if test="productCategoryId != null">
+                and product_category_id=#{productCategoryId}
+            </if>
+            <if test="brandId != null">
+               and brand_id=#{brandId},
+            </if>
+            <if test="brandId != null">
+               and publish_house_id =#{publishHouseId}
+            </if>
+        </where>
+
+    </select>
 </mapper>
