@@ -18,10 +18,10 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Component
-public class PmsSkuStock implements Serializable {
-    private Long id;
-
-    private Long productId;
+public class PmsSkuStock extends PmsProductCommonInfo implements Serializable {
+//    private Long id;
+//
+//    private Long productId;
 
     @ApiModelProperty(value = "sku编码")
     private String skuCode;

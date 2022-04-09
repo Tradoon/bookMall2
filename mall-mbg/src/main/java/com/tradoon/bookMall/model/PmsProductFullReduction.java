@@ -17,10 +17,10 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class PmsProductFullReduction implements Serializable {
-    private Long id;
-
-    private Long productId;
+public class PmsProductFullReduction extends PmsProductCommonInfo implements Serializable {
+//    private Long id;
+//
+//    private Long productId;
 
     private BigDecimal fullPrice;
 

@@ -18,10 +18,10 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class PmsMemberPrice  implements Serializable {
-    private Long id;
-
-    private Long productId;
+public class PmsMemberPrice extends PmsProductCommonInfo implements Serializable {
+//    private Long id;
+//
+//    private Long productId;
 
     private Long memberLevelId;
 

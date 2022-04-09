@@ -18,10 +18,10 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PmsProductLadder implements Serializable {
-    private Long id;
-
-    private Long productId;
+public class PmsProductLadder extends  PmsProductCommonInfo implements Serializable {
+//    private Long id;
+//
+//    private Long productId;
 
     @ApiModelProperty(value = "满足的商品数量")
     private Integer count;
