@@ -14,12 +14,12 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CmsPrefrenceAreaProductRelation  implements Serializable {
-    private Long id;
+public class CmsPrefrenceAreaProductRelation  extends PmsProductCommonInfo implements Serializable {
+//    private Long id;
 
     private Long prefrenceAreaId;
 
-    private Long productId;
+//    private Long productId;
 
     private static final long serialVersionUID = 1L;
 

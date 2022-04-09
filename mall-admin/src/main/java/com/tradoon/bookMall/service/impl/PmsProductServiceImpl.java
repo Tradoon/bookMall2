@@ -40,6 +40,11 @@ public class PmsProductServiceImpl implements PmsProductService {
     PmsProductAttributeValueDao pmsProductAttributeValueDao;
 
     @Autowired
+    CmsSubjectProductRelationDao cmsSubjectProductRelationDao;
+
+    @Autowired
+    CmsPrefrenceAreaProductRelationDao cmsPrefrenceAreaProductRelationDao;
+    @Autowired
     SnowflakeConfig snowflakeConfig;
 
 
@@ -86,9 +91,20 @@ public class PmsProductServiceImpl implements PmsProductService {
            //todo  考虑要不要将逗号分割的完全分割成字符数组
             pmsProductAttributeValueDao.insertList(listWithId);
         }
-        //todo 关联专题
+        // 关联专题
+        List<CmsSubjectProductRelation> sbjectRList = param.getSubjectProductRelationList();
+        if(!sbjectRList.isEmpty()){
+            List<CmsSubjectProductRelation> listWithId = (List<CmsSubjectProductRelation>) getListWithId(sbjectRList, productId);
+            cmsSubjectProductRelationDao.insertList(listWithId);
+        }
+        // 关联优选
 
-        //todo 关联优选
+        List<CmsPrefrenceAreaProductRelation> preAreaList = param.getPrefrenceAreaProductRelationList();
+        if(!preAreaList.isEmpty()){
+            List<CmsPrefrenceAreaProductRelation> listWithId = (List<CmsPrefrenceAreaProductRelation>) getListWithId(preAreaList, productId);
+            cmsPrefrenceAreaProductRelationDao.insertList(listWithId);
+
+        }
 
         return CommonResult.success(null);
     }
