@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.tradoon.bookMall.dao.PmsProductLadderDao">
+<mapper namespace="com.tradoon.bookMall.dao.PmsProductAttributeValueDao">
 
     <insert id="insertList">
-        INSERT INTO pms_product_ladder (id,product_id, count, discount, price) VALUES
+        insert into pms_product_attribute_value (id,product_id,product_attribute_id,value) values
         <foreach collection="list" item="item" index="index" separator=",">
             (#{item.id,jdbcType=BIGINT},
-            #{item.productId,jdbcType=BIGINT},
-            #{item.count,jdbcType=INTEGER},
-            #{item.discount,jdbcType=DECIMAL},
-            #{item.price,jdbcType=DECIMAL})
+             #{item.productId,jdbcType=BIGINT},
+            #{item.productAttributeId,jdbcType=BIGINT},
+            #{item.value,jdbcType=VARCHAR})
         </foreach>
     </insert>
 </mapper>

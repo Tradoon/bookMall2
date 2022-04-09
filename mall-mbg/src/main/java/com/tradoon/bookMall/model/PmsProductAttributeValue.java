@@ -15,10 +15,10 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PmsProductAttributeValue implements Serializable {
-    private Long id;
-
-    private Long productId;
+public class PmsProductAttributeValue  extends PmsProductCommonInfo implements Serializable {
+//    private Long id;
+//
+//    private Long productId;
 
     private Long productAttributeId;
 

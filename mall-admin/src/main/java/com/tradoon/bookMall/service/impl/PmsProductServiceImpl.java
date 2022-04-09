@@ -32,8 +32,12 @@ public class PmsProductServiceImpl implements PmsProductService {
 
     @Autowired
     PmsSkuStockDao pmsSkuStockDao;
+
     @Autowired
     PmsProductFullReductionDao pmsProductFullReductionDao;
+
+    @Autowired
+    PmsProductAttributeValueDao pmsProductAttributeValueDao;
 
     @Autowired
     SnowflakeConfig snowflakeConfig;
@@ -75,21 +79,24 @@ public class PmsProductServiceImpl implements PmsProductService {
             List<PmsSkuStock> listWithId = (List<PmsSkuStock>) getListWithId(skuList, productId);
             pmsSkuStockDao.insertList(listWithId);
         }
+        // 自定义商品规格
+        List<PmsProductAttributeValue> attriList = param.getProductAttributeValueList();
+        if(!attriList.isEmpty()){
+            List<PmsProductAttributeValue> listWithId = (List<PmsProductAttributeValue>) getListWithId(attriList, productId);
+           //todo  考虑要不要将逗号分割的完全分割成字符数组
+            pmsProductAttributeValueDao.insertList(listWithId);
+        }
         //todo 关联专题
+
         //todo 关联优选
 
-
-        // todo 特惠促销
-
-
-
-        return null;
+        return CommonResult.success(null);
     }
 
     private List<PmsSkuStock> handleSkuCode(List<PmsSkuStock> skuList,Long productId) {
         for (int i = 0; i < skuList.size(); i++) {
             PmsSkuStock pmsSkuStock = skuList.get(i);
-            if(StringUtils.isNotBlank(pmsSkuStock.getSkuCode())){
+
             StringBuilder sb=new StringBuilder();
                 SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
                 // 当前时间
@@ -103,7 +110,7 @@ public class PmsProductServiceImpl implements PmsProductService {
                 sb.append(String.format("%03d",i+1));
                 pmsSkuStock.setSkuCode(String.valueOf(sb));
             }
-        }
+
         return skuList;
     }
 
