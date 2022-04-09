@@ -3,7 +3,7 @@
 <mapper namespace="com.tradoon.bookMall.dao.PmsProductLadderDao">
 
     <insert id="insertList">
-        INSERT INTO pms_product_ladder (id,product_id, count, discount, price) VALUES
+        INSERT INTO pms_product_ladder (product_id, count, discount, price) VALUES
         <foreach collection="list" item="item" index="index" separator=",">
             (#{item.id,jdbcType=BIGINT},
             (#{item.productId,jdbcType=BIGINT},

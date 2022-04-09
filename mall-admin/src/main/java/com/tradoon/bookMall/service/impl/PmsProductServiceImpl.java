@@ -6,9 +6,12 @@ import com.tradoon.bookMall.dto.PmsProductParam;
 import com.tradoon.bookMall.model.*;
 import com.tradoon.bookMall.service.PmsProductService;
 import com.tradoon.bookMall.utils.SnowflakeConfig;
+import net.logstash.logback.encoder.org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -66,13 +69,42 @@ public class PmsProductServiceImpl implements PmsProductService {
         //sku 库存信息
         List<PmsSkuStock> skuList = param.getSkuStockList();
         if(!skuList.isEmpty()){
-
+            // 处理sku编码信息
+            skuList=handleSkuCode(skuList,productId);
+            //增加sku编码信息
+            List<PmsSkuStock> listWithId = (List<PmsSkuStock>) getListWithId(skuList, productId);
+            pmsSkuStockDao.insertList(listWithId);
         }
+        //todo 关联专题
+        //todo 关联优选
+
+
         // todo 特惠促销
 
 
 
         return null;
+    }
+
+    private List<PmsSkuStock> handleSkuCode(List<PmsSkuStock> skuList,Long productId) {
+        for (int i = 0; i < skuList.size(); i++) {
+            PmsSkuStock pmsSkuStock = skuList.get(i);
+            if(StringUtils.isNotBlank(pmsSkuStock.getSkuCode())){
+            StringBuilder sb=new StringBuilder();
+                SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
+                // 当前时间
+                sb.append(sdf.format(new Date()));
+                // 保留productId 末尾四位数
+                String skuByPid = String.valueOf(productId);
+                skuByPid=skuByPid.length()>4?skuByPid.substring(skuByPid.length()-4):skuByPid;
+                sb.append(skuByPid);
+                // 当前索引
+                //todo 当前前端不传入输入的skucode ，之后更改为添加上前端传入的skucode
+                sb.append(String.format("%03d",i+1));
+                pmsSkuStock.setSkuCode(String.valueOf(sb));
+            }
+        }
+        return skuList;
     }
 
 
