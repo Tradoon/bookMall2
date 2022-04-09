@@ -4,6 +4,8 @@ import com.tradoon.bookMall.api.CommonPage;
 import com.tradoon.bookMall.api.CommonResult;
 import com.tradoon.bookMall.model.PmsProductAttributeCategory;
 
+import java.util.List;
+
 /**
  * author:tradoon
  * desciption:
@@ -17,4 +19,6 @@ public interface PmsProductAttributeCategoryService {
     CommonResult update(Long id, String name);
 
     CommonResult delAC(Long id);
+
+    CommonResult<List<PmsProductAttributeCategory>> withAttr();
 }

@@ -52,6 +52,10 @@ public class PmsProductAttributeCategoryController {
     }
 
 
-
+    @ApiOperation("查询所有属性分类")
+    @GetMapping("/list/withAttr")
+    public CommonResult<List<PmsProductAttributeCategory>> withAttr(){
+        return  pmsAbCService.withAttr();
+    }
 
 }

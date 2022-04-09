@@ -32,4 +32,10 @@ public interface PmsProductCategoryMapper {
      * @param pmspc
      */
     void updateByInfo(@Param("ids") List<Long> ids, @Param("pmspc") PmsProductCategory pmspc);
+
+    /**
+     * 刪除指定id的信息
+     * @param id
+     */
+    void delete(@Param("id") Long id);
 }

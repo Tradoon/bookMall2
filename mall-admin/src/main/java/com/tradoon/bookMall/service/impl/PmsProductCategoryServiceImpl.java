@@ -17,6 +17,7 @@ import com.tradoon.bookMall.utils.SnowflakeConfig;
 import net.logstash.logback.encoder.org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -127,6 +128,35 @@ public class PmsProductCategoryServiceImpl implements PmsProductCategoryService 
         PmsProductCategory pmsProductCategory = new PmsProductCategory();
         pmsProductCategory.setNavStatus(navStatus);
         pmsProductCategoryMapper.updateByInfo(ids,pmsProductCategory);
+        return CommonResult.success(null);
+    }
+
+    @Override
+    public CommonResult update(Long id, PmsProductCategoryParam productCategoryParam) {
+        PmsProductCategory ppc = new PmsProductCategory();
+        BeanUtils.copyProperties(productCategoryParam,ppc);
+        if(StringUtils.isNotBlank(ppc.getName())){
+            PmsProductCategory tmpPPC = new PmsProductCategory();
+            tmpPPC.setName(ppc.getName());
+            List<PmsProductCategory> infoByName = pmsProductCategoryMapper.findByInfo(tmpPPC);
+            for (PmsProductCategory pmsProductCategory : infoByName) {
+                if(pmsProductCategory.getId()!=id) {
+                    return CommonResult.failed(ResultCode.ATTRIBUTTE_NAME_REPEAT.getMessage());
+                }
+            }
+        }
+        ArrayList<Long> ids = new ArrayList<>();
+        ids.add(id);
+        pmsProductCategoryMapper.updateByInfo(ids,ppc);
+        return  CommonResult.success(null);
+    }
+
+    @Override
+    public CommonResult delete(Long id) {
+        if(Objects.isNull(id)){
+            return CommonResult.failed(ResultCode.ATTRIBUTTE_NAME_INPUT_NULL.getMessage());
+        }
+        pmsProductCategoryMapper.delete(id);
         return CommonResult.success(null);
     }
 }

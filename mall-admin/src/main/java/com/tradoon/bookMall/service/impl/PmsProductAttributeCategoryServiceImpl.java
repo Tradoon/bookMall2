@@ -105,4 +105,12 @@ public class PmsProductAttributeCategoryServiceImpl implements PmsProductAttribu
         //删除attribute和category联合数据
         return CommonResult.success(null);
     }
+
+    @Override
+    public CommonResult<List<PmsProductAttributeCategory>> withAttr() {
+        int pageNum=1;
+        int pageSize=Integer.MAX_VALUE;
+        CommonResult<CommonPage<PmsProductAttributeCategory>> commonPageCommonResult = selectList(pageNum, pageSize);
+        return CommonResult.success(commonPageCommonResult.getData().getList());
+    }
 }

@@ -24,4 +24,8 @@ public interface PmsProductCategoryService {
     CommonResult updateShowStatus(List<Long> ids, Integer showStatus);
 
     CommonResult updateNavStatus(List<Long> ids, Integer navStatus);
+
+    CommonResult update(Long id, PmsProductCategoryParam productCategoryParam);
+
+    CommonResult delete(Long id);
 }

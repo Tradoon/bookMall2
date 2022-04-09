@@ -54,5 +54,19 @@ public class PmsProductCategoryController {
 
     }
 
+    @ApiOperation("删除商品分类")
+    @PostMapping( "/delete/{id}")
+    public CommonResult delete(@PathVariable Long id) {
+        return pmsProductCategoryService.delete(id);
+    }
+
+    @ApiOperation("修改商品分类")
+    @PostMapping(value = "/update/{id}")
+    public CommonResult update(@PathVariable Long id,
+                               @Validated
+                               @RequestBody PmsProductCategoryParam productCategoryParam) {
+        return  pmsProductCategoryService.update(id, productCategoryParam);
+
+    }
 
 }

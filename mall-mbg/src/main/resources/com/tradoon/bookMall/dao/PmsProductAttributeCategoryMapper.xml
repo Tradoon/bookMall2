@@ -62,10 +62,10 @@
     </delete>
 
     <select id="findByList" resultType="com.tradoon.bookMall.model.PmsProductAttributeCategory">
-        select `id` ,
-               `name` ,
-               `attribute_count` ,
-               `param_count`
+        select `id`  as id,
+               `name` as name,
+               `attribute_count`  as attributeCount,
+               `param_count` as paramCount
         from pms_product_attribute_category
         <where>
             <if test="name!=null">

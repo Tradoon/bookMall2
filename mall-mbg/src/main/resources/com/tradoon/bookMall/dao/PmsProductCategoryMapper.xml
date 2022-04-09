@@ -141,6 +141,11 @@
                 </if>
             </where>
     </update>
+    <delete id="delete">
+        delete
+        from pms_product_category
+        where id=#{id}
+    </delete>
 
     <select id="findByInfo" resultType="com.tradoon.bookMall.model.PmsProductCategory">
         SELECT
