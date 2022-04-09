@@ -354,10 +354,10 @@
                 and product_category_id=#{productCategoryId}
             </if>
             <if test="brandId != null">
-               and brand_id=#{brandId},
+               and brand_id=#{brandId}
             </if>
             <if test="brandId != null">
-               and publish_house_id =#{publishHouseId}
+               and publish_house_id =#{brandId}
             </if>
         </where>
 
