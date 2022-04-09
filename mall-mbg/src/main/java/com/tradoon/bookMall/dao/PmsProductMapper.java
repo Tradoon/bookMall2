@@ -3,6 +3,8 @@ package com.tradoon.bookMall.dao;
 import com.tradoon.bookMall.model.PmsProduct;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * author:tradoon
  * desciption:
@@ -15,4 +17,11 @@ public interface PmsProductMapper {
      * @param pmsProduct
      */
     void insertSelective(PmsProduct pmsProduct);
+
+    /**
+     * 按照筛选条件进行查询
+     * @param pmsProduct
+     * @return
+     */
+    List<PmsProduct> findBySelective(PmsProduct pmsProduct);
 }

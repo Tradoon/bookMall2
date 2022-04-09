@@ -1,12 +1,18 @@
 package com.tradoon.bookMall.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.tradoon.bookMall.api.CommonPage;
 import com.tradoon.bookMall.api.CommonResult;
 import com.tradoon.bookMall.dao.*;
 import com.tradoon.bookMall.dto.PmsProductParam;
+import com.tradoon.bookMall.dto.PmsProductQueryParam;
 import com.tradoon.bookMall.model.*;
 import com.tradoon.bookMall.service.PmsProductService;
 import com.tradoon.bookMall.utils.SnowflakeConfig;
 import net.logstash.logback.encoder.org.apache.commons.lang.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,6 +61,8 @@ public class PmsProductServiceImpl implements PmsProductService {
         Long productId=snowflakeConfig.snowFlackId();
         pmsProduct.setBrandId(productId);
         // 插入商品
+        pmsProduct.setCreateTime(new Date());
+        pmsProduct.setUpdateTime(new Date());
         pmsProductMapper.insertSelective(pmsProduct);
         //插入关联信息
             // 会员价格
@@ -107,6 +115,25 @@ public class PmsProductServiceImpl implements PmsProductService {
         }
 
         return CommonResult.success(null);
+    }
+
+    @Override
+    public CommonResult<CommonPage<PmsProduct>> getPageList(PmsProductQueryParam productQueryParam, Integer pageSize, Integer pageNum) {
+        Page<Object> pageHelper = PageHelper.startPage(pageNum, pageSize);
+        PmsProduct pmsProduct = new PmsProduct();
+        BeanUtils.copyProperties(productQueryParam,pmsProduct);
+
+       List<PmsProduct> productList=
+               pmsProductMapper.findBySelective(pmsProduct);
+
+
+        PageInfo<PmsProduct> pmsPageInfo = new PageInfo<>(productList);
+        pmsPageInfo.setPageNum(pageHelper.getPageNum());
+        pmsPageInfo.setPageSize(pageHelper.getPageSize());
+        pmsPageInfo.setPages(pageHelper.getPages());
+        pmsPageInfo.setTotal(pageHelper.getTotal());
+
+        return CommonResult.success(new CommonPage<>(pmsPageInfo));
     }
 
     private List<PmsSkuStock> handleSkuCode(List<PmsSkuStock> skuList,Long productId) {

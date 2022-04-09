@@ -21,7 +21,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class PmsProduct implements Serializable {
     private Long id;
-//todo 后期改成出版社的id
+//todo 后期直接删去，使用出版社的id
     private Long brandId;
 
     private Long productCategoryId;
@@ -133,6 +133,18 @@ public class PmsProduct implements Serializable {
 
     @ApiModelProperty(value = "移动端网页详情")
     private String detailMobileHtml;
+
+    @ApiModelProperty("出版社id")
+    private Long publishHouseId;
+
+    @ApiModelProperty("出版社名字")
+    private String publishHouseName;
+
+    @ApiModelProperty("商品创建时间")
+    private Date createTime;
+
+    @ApiModelProperty("商品更新时间")
+    private Date updateTime;
 
     private static final long serialVersionUID = 1L;
 
