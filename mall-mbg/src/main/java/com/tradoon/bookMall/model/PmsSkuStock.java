@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 /**
  * author:tradoon
@@ -50,5 +51,28 @@ public class PmsSkuStock extends PmsProductCommonInfo implements Serializable {
     private String spData;
 
     private static final long serialVersionUID = 1L;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PmsSkuStock skuStockO = (PmsSkuStock) o;
+        return stock==skuStockO.getStock()
+                &&skuCode==skuStockO.getSkuCode()
+                &&price==skuStockO.getPrice()
+                &&lowStock== skuStockO.getLowStock()
+                &&pic==skuStockO.getPic()
+                &&sale== skuStockO.getSale()
+                &&promotionPrice==skuStockO.getPromotionPrice()
+                &&lockStock==skuStockO.getLockStock()
+                &&spData==skuStockO.getSpData();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(stock,skuCode,price,lockStock,pic,sale,promotionPrice,lockStock,spData);
+    }
+
+
 
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 /**
  * author:tradoon
@@ -33,5 +34,19 @@ public class PmsProductLadder extends  PmsProductCommonInfo implements Serializa
     private BigDecimal price;
 
     private static final long serialVersionUID = 1L;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PmsProductLadder ladder = (PmsProductLadder) o;
+        return count==ladder.getCount()
+                &&discount==ladder.getDiscount()
+                &&price==ladder.getPrice();
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(count, discount, price);
+    }
 }
+

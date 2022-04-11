@@ -23,4 +23,6 @@ public interface PmsProductService {
      * @return
      */
     CommonResult<CommonPage<PmsProduct>> getPageList(PmsProductQueryParam productQueryParam, Integer pageSize, Integer pageNum);
+
+    CommonResult update(Long id, PmsProductParam productParam);
 }

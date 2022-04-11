@@ -17,8 +17,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * author:tradoon
@@ -136,6 +138,79 @@ public class PmsProductServiceImpl implements PmsProductService {
         return CommonResult.success(new CommonPage<>(pmsPageInfo));
     }
 
+    @Override
+    public CommonResult update(Long prodcutId, PmsProductParam productParam) {
+        // 不需要筛除重复项
+        PmsProduct pmsProduct =productParam;
+
+        if(Objects.isNull(pmsProduct.getId())){
+            pmsProduct.setId(prodcutId);
+        }
+        // 更改产品信息
+        pmsProductMapper.updateByPrimaryKeySelective(pmsProduct);
+       //todo 更改为逻辑删除，同时筛选出未更改的做处理
+        //更改关联项
+        // 删除已有关联项
+        //添加新增关联项
+//        List<PmsSkuStock> skuStockList = productParam.getSkuStockList();
+        // 修改库存信息
+
+        // 修改ladder信息
+
+        return null;
+    }
+
+    public void  updateLadder(PmsProductParam productParam)  {
+        List<PmsProductLadder> productLadderList = productParam.getProductLadderList();
+        List<PmsProductLadder> ladderList= pmsProductLadderDao.findByInfo(productParam.getId());
+        // 批量加入新增的ladder
+        ArrayList<PmsProductLadder> insertList = new ArrayList<>();
+        for(PmsProductLadder ladderItem: productLadderList){
+            if(!ladderList.contains(ladderItem)){
+                ladderItem.setId(snowflakeConfig.snowFlackId());
+                ladderItem.setProductId(productParam.getId());
+                insertList.add(ladderItem);
+            }
+        }
+        pmsProductLadderDao.insertList(insertList);
+        // 批量删除修改后不存在的ladder
+        ArrayList<Long> delListProdctId = new ArrayList<>();
+        for (PmsProductLadder dbLadderItem : ladderList) {
+            if(!productLadderList.contains(dbLadderItem)){
+                delListProdctId.add( dbLadderItem.getId());
+            }
+        }
+        pmsProductLadderDao.delMulti(delListProdctId);
+    }
+
+    public void  updateStock(PmsProductParam productParam)  {
+        List<PmsSkuStock> skuStockList = productParam.getSkuStockList();
+
+        List<PmsSkuStock> dbStockSkuList= pmsSkuStockDao.findByInfo(productParam.getId());
+        // 批量加入新增的stock
+        ArrayList<PmsSkuStock> insertList = new ArrayList<>();
+        for(PmsSkuStock skuStockItem: skuStockList){
+            if(!dbStockSkuList.contains(skuStockItem)){
+                skuStockItem.setId(snowflakeConfig.snowFlackId());
+                skuStockItem.setProductId(productParam.getId());
+                insertList.add(skuStockItem);
+            }
+        }
+        List<PmsSkuStock> trueInsertSku = handleSkuCode(insertList, productParam.getId());
+        pmsSkuStockDao.insertList(trueInsertSku);
+        // 批量删除修改后不存在的stock
+        ArrayList<Long> delListProdctId = new ArrayList<>();
+        for (PmsSkuStock dbStockSkuItem : dbStockSkuList) {
+            if(!skuStockList.contains(dbStockSkuItem)){
+                delListProdctId.add( dbStockSkuItem.getId());
+            }
+        }
+        pmsSkuStockDao.delMulti(delListProdctId);
+    }
+
+    public void updateFullRedution(PmsProductParam productParam){
+
+    }
     private List<PmsSkuStock> handleSkuCode(List<PmsSkuStock> skuList,Long productId) {
         for (int i = 0; i < skuList.size(); i++) {
             PmsSkuStock pmsSkuStock = skuList.get(i);

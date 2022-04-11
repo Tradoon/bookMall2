@@ -4,6 +4,7 @@ import com.tradoon.bookMall.model.PmsSkuStock;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,4 +19,17 @@ public interface PmsSkuStockDao {
      * @param listWithId
      */
     void insertList(@Param("list") List<PmsSkuStock> listWithId);
+
+    /**
+     * 根据
+     * @param projectId
+     * @return
+     */
+    List<PmsSkuStock> findByInfo(@Param("projectId") Long projectId);
+
+    /**
+     * 批量删除sku信息
+     * @param delListProdctId
+     */
+    void delMulti(@Param("id") ArrayList<Long> delListProdctId);
 }

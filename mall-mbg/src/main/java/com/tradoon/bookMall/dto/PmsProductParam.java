@@ -37,4 +37,5 @@ public class PmsProductParam extends PmsProduct {
     @ApiModelProperty("优选专区和商品的关系")
     private List<CmsPrefrenceAreaProductRelation> prefrenceAreaProductRelationList;
 
+
 }

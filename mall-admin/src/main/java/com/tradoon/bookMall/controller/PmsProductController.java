@@ -35,4 +35,10 @@ public class PmsProductController {
                                                         @RequestParam(value = "pageNum", defaultValue = "1")Integer pageNum){
     return  pmsProductService.getPageList(productQueryParam,pageSize,pageNum);
     }
+
+    @ApiOperation("更新商品")
+    @PostMapping("/update/{id}")
+    public CommonResult update(@PathVariable Long id, @RequestBody PmsProductParam productParam){
+        return pmsProductService.update(id,productParam);
+    }
 }
