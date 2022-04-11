@@ -5,6 +5,7 @@ import com.tradoon.bookMall.api.CommonResult;
 import com.tradoon.bookMall.dto.PmsProductParam;
 import com.tradoon.bookMall.dto.PmsProductQueryParam;
 import com.tradoon.bookMall.model.PmsProduct;
+import com.tradoon.bookMall.model.PmsProductResult;
 
 /**
  * author:tradoon
@@ -25,4 +26,6 @@ public interface PmsProductService {
     CommonResult<CommonPage<PmsProduct>> getPageList(PmsProductQueryParam productQueryParam, Integer pageSize, Integer pageNum);
 
     CommonResult update(Long id, PmsProductParam productParam);
+
+    CommonResult<PmsProductResult> getUpdateInfo(Long id);
 }

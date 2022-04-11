@@ -12,4 +12,9 @@
             #{item.memberLevelName,jdbcType=VARCHAR})
         </foreach>
     </insert>
+    <select id="findByInfo" resultType="com.tradoon.bookMall.model.PmsMemberPrice">
+        select  id as id,product_id as  productId, member_level_id as memberLevelId, member_price as memberPrice ,member_level_name as memberLevelName
+        from pms_member_price
+        where product_id=#{productId}
+    </select>
 </mapper>

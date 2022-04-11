@@ -52,6 +52,10 @@ public class PmsProductServiceImpl implements PmsProductService {
 
     @Autowired
     CmsPrefrenceAreaProductRelationDao cmsPrefrenceAreaProductRelationDao;
+
+    @Autowired
+    PmsProductCategoryMapper productCategoryMapper;
+
     @Autowired
     SnowflakeConfig snowflakeConfig;
 
@@ -152,11 +156,9 @@ public class PmsProductServiceImpl implements PmsProductService {
         pmsProductMapper.updateByPrimaryKeySelective(pmsProduct);
        //todo 更改为逻辑删除，同时筛选出未更改的做处理
         //更改关联项
-        // 删除已有关联项
-        //添加新增关联项
-//        List<PmsSkuStock> skuStockList = productParam.getSkuStockList();
+       // 修改会员价格
+        updateMemberPrice(productParam);
         // 修改商品参数
-
         updateAttributeValue(productParam);
         // 修改库存信息
         updateStock(productParam);
@@ -171,6 +173,40 @@ public class PmsProductServiceImpl implements PmsProductService {
 
 
         return CommonResult.success(null);
+    }
+
+    private void updateMemberPrice(PmsProductParam productParam) {
+        List<PmsMemberPrice> memberPriceList = productParam.getMemberPriceList();
+        List<PmsMemberPrice> dbMemberPrice=pmsMemberPriceDao.findByInfo(productParam.getId());
+    }
+
+    @Override
+    public CommonResult<PmsProductResult> getUpdateInfo(Long id) {
+        PmsProduct pmsProduct = new PmsProduct();
+        PmsProductResult res = new PmsProductResult();
+        pmsProduct.setId(id);
+        List<PmsProduct> bySelective = pmsProductMapper.findBySelective(pmsProduct);
+        PmsProduct productBySelective = bySelective.get(0);
+        Long categoryId = productBySelective.getProductCategoryId();
+        PmsProductCategory pmsProductCategory = new PmsProductCategory();
+        pmsProductCategory.setId(categoryId);
+
+        BeanUtils.copyProperties(bySelective.get(0),res);
+
+
+        //todo 后期看能不能使用多表查询得出结果 结合resultMap
+        res.setCateParentId(productCategoryMapper.findByInfo(pmsProductCategory).get(0).getParentId());
+
+        res.setMemberPriceList(pmsMemberPriceDao.findByInfo(id));
+         res.setProductLadderList(pmsProductLadderDao.findByInfo(id));
+         res.setSkuStockList(pmsSkuStockDao.findByInfo(id));
+         res.setProductAttributeValueList(pmsProductAttributeValueDao.findByInfo(id));
+         res.setProductFullReductionList(pmsProductFullReductionDao.findByInfo(id));
+         res.setSubjectProductRelationList(cmsSubjectProductRelationDao.findByInfo(id));
+         res.setPrefrenceAreaProductRelationList(cmsPrefrenceAreaProductRelationDao.findByInfo(id));
+
+//        pmsProductMapper.findProjectAllInfo(id)
+        return CommonResult.success(res);
     }
 
     private void updatePrefrenceAreaProductRelation(PmsProductParam productParam) {

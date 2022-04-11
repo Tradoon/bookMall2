@@ -18,4 +18,12 @@ public interface PmsMemberPriceDao {
      * @param memberPrice
      */
     void insertList(@Param("list") List<PmsMemberPrice> memberPrice);
+
+    /**
+     * 查找
+     * @param productId
+     * @return
+     */
+
+    List<PmsMemberPrice> findByInfo(@Param("productId") Long productId);
 }

@@ -164,9 +164,12 @@
         FROM
             pms_product_category
         <where>
-              <if test="parentId!=null">
-            parent_id = #{parentId}
-              </if>
+            <if test="id!=null">
+                id=#{id}
+            </if>
+            <if test="parentId!=null">
+            AND parent_id = #{parentId}
+            </if>
           <if test="name!=null">
           AND NAME = #{name}
           </if>

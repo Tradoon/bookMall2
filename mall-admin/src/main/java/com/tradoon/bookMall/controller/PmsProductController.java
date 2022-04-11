@@ -5,6 +5,7 @@ import com.tradoon.bookMall.api.CommonResult;
 import com.tradoon.bookMall.dto.PmsProductParam;
 import com.tradoon.bookMall.dto.PmsProductQueryParam;
 import com.tradoon.bookMall.model.PmsProduct;
+import com.tradoon.bookMall.model.PmsProductResult;
 import com.tradoon.bookMall.service.PmsProductService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,4 +42,12 @@ public class PmsProductController {
     public CommonResult update(@PathVariable Long id, @RequestBody PmsProductParam productParam){
         return pmsProductService.update(id,productParam);
     }
+
+    @ApiOperation("根据商品id获取商品编辑信息")
+    @GetMapping("/updateInfo/{id}")
+    public CommonResult<PmsProductResult>  getUpdateInfo(@PathVariable Long id){
+        return pmsProductService.getUpdateInfo(id);
+    }
+
+
 }
