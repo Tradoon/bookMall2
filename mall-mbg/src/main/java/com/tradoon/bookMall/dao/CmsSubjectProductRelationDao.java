@@ -18,4 +18,13 @@ public interface CmsSubjectProductRelationDao {
      * @param listWithId
      */
     void insertList(@Param("list") List<CmsSubjectProductRelation> listWithId);
+
+    /**
+     *
+     * @param productId
+     * @return
+     */
+    List<CmsSubjectProductRelation> findByInfo(@Param("productId") Long productId);
+
+    void multiDel(@Param("id") List<Long> id);
 }

@@ -11,4 +11,18 @@
         </foreach>
 
     </insert>
+    <delete id="multiDel">
+        <if test="id.size>0"></if>
+        delete from cms_prefrence_area_product_relation
+        where id in
+        <foreach collection="id" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+    </delete>
+    <select id="findByInfo" resultType="com.tradoon.bookMall.model.CmsPrefrenceAreaProductRelation">
+        select  id as id ,prefrence_area_id as prefrenceAreaId , product_id as productId
+        from cms_prefrence_area_product_relation
+        where product_id=#{productId}
+
+    </select>
 </mapper>

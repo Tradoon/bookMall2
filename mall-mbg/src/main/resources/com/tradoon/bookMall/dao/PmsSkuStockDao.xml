@@ -17,14 +17,14 @@
         </foreach>
     </insert>
     <delete id="delMulti">
-        <if test="id.size>0">
+
             delete
             from pms_sku_stock
             where id in
             <foreach collection="id" open="(" close=")" separator="," item="item">
                 #{item}
             </foreach>
-        </if>
+
     </delete>
     <select id="findByInfo" resultType="com.tradoon.bookMall.model.PmsSkuStock">
         select id as id,product_id as productId , sku_code as skuCode, price as price , stock as stock , low_stock as  lowStock, pic as pic, sale as sale , sp_data as spData

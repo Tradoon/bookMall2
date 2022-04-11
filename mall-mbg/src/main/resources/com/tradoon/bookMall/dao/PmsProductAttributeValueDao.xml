@@ -11,4 +11,18 @@
             #{item.value,jdbcType=VARCHAR})
         </foreach>
     </insert>
+    <delete id="delMulti">
+            delete
+            from pms_product_attribute_value
+            where id in
+            <foreach collection="id" open="(" close=")" separator="," item="item">
+                #{item}
+            </foreach>
+    </delete>
+    <select id="findByInfo" resultType="com.tradoon.bookMall.model.PmsProductAttributeValue">
+        select id as id,product_id as productId ,product_attribute_id as productAttributeId,value as value
+        from pms_product_attribute_value
+        where product_id=#{productId}
+
+    </select>
 </mapper>

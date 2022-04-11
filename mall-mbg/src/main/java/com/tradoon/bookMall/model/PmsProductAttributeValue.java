@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * author:tradoon
@@ -27,5 +28,17 @@ public class PmsProductAttributeValue  extends PmsProductCommonInfo implements S
 
     private static final long serialVersionUID = 1L;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PmsProductAttributeValue av = (PmsProductAttributeValue) o;
+        return  productAttributeId==av.getProductAttributeId()
+                &&value==av.getValue();
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(productAttributeId,value);
+    }
 }

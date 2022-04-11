@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 /**
  * author:tradoon
@@ -27,4 +28,19 @@ public class PmsProductFullReduction extends PmsProductCommonInfo implements Ser
     private BigDecimal reducePrice;
 
     private static final long serialVersionUID = 1L;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PmsProductFullReduction reduction = (PmsProductFullReduction) o;
+        return  fullPrice==reduction.getFullPrice()
+                &&reducePrice==reduction.getReducePrice();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(fullPrice,reducePrice);
+    }
+
 }

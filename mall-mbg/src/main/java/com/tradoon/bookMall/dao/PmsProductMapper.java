@@ -24,4 +24,10 @@ public interface PmsProductMapper {
      * @return
      */
     List<PmsProduct> findBySelective(PmsProduct pmsProduct);
+
+    /**
+     * 对商品信息进行更改
+     * @param pmsProduct
+     */
+    void updateByPrimaryKeySelective(PmsProduct pmsProduct);
 }

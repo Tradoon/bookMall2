@@ -9,5 +9,20 @@
              #{item.subjectId,jdbcType=BIGINT},
             #{item.productId,jdbcType=BIGINT})
         </foreach>
+
     </insert>
+    <delete id="multiDel">
+            delete
+            from  cms_subject_product_relation
+            where id in
+            <foreach collection="id" item="item" separator="," open="(" close=")">
+                #{item}
+            </foreach>
+    </delete>
+
+    <select id="findByInfo" resultType="com.tradoon.bookMall.model.CmsSubjectProductRelation">
+        select id as id ,subject_id as subjectId , product_id as productId
+        from cms_subject_product_relation
+        where product_id=#{productId}
+    </select>
 </mapper>

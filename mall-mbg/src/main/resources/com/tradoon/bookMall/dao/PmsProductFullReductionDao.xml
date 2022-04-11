@@ -11,4 +11,19 @@
             #{item.reducePrice,jdbcType=DECIMAL})
         </foreach>
     </insert>
+    <delete id="delMulti">
+        <if test="id.size>0">
+            delete
+            from pms_product_full_reduction
+            where id in
+            <foreach collection="id" item="item" separator="," open="(" close=")">
+                #{item}
+            </foreach>
+        </if>
+    </delete>
+    <select id="findByInfo" resultType="com.tradoon.bookMall.model.PmsProductFullReduction">
+    select id as id,product_id as productId , full_price as fullPrice, reduce_price as reducePrice
+    from pms_product_full_reduction
+    where product_id =#{productId}
+    </select>
 </mapper>

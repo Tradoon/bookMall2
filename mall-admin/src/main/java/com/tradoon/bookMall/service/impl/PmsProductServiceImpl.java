@@ -94,6 +94,7 @@ public class PmsProductServiceImpl implements PmsProductService {
             List<PmsSkuStock> listWithId = (List<PmsSkuStock>) getListWithId(skuList, productId);
             pmsSkuStockDao.insertList(listWithId);
         }
+
         // 自定义商品规格
         List<PmsProductAttributeValue> attriList = param.getProductAttributeValueList();
         if(!attriList.isEmpty()){
@@ -146,6 +147,7 @@ public class PmsProductServiceImpl implements PmsProductService {
         if(Objects.isNull(pmsProduct.getId())){
             pmsProduct.setId(prodcutId);
         }
+        pmsProduct.setUpdateTime(new Date());
         // 更改产品信息
         pmsProductMapper.updateByPrimaryKeySelective(pmsProduct);
        //todo 更改为逻辑删除，同时筛选出未更改的做处理
@@ -153,11 +155,96 @@ public class PmsProductServiceImpl implements PmsProductService {
         // 删除已有关联项
         //添加新增关联项
 //        List<PmsSkuStock> skuStockList = productParam.getSkuStockList();
+        // 修改商品参数
+
+        updateAttributeValue(productParam);
         // 修改库存信息
-
+        updateStock(productParam);
         // 修改ladder信息
+        updateLadder(productParam);
+        //修改满减信息
+        updateFullRedution(productParam);
+        //修改关联专题
+        updateSubject(productParam);
+        //修改关联优选
+        updatePrefrenceAreaProductRelation(productParam);
 
-        return null;
+
+        return CommonResult.success(null);
+    }
+
+    private void updatePrefrenceAreaProductRelation(PmsProductParam productParam) {
+        List<CmsPrefrenceAreaProductRelation> papr = productParam.getPrefrenceAreaProductRelationList();
+        List<CmsPrefrenceAreaProductRelation> dbPapr= cmsPrefrenceAreaProductRelationDao.findByInfo(productParam.getId());
+        List<CmsPrefrenceAreaProductRelation> multiInsertList=new ArrayList<>();
+        List<Long> multiDel=new ArrayList<>();
+        for (CmsPrefrenceAreaProductRelation paprItem : papr) {
+        if (!(dbPapr.contains(paprItem))){
+            paprItem.setId(snowflakeConfig.snowFlackId());
+            paprItem.setProductId(productParam.getId());
+            multiInsertList.add(paprItem);
+        }
+
+        }
+        for (CmsPrefrenceAreaProductRelation dbPaprItem : dbPapr) {
+            if (!papr.contains(dbPaprItem)){
+                multiDel.add(dbPaprItem.getId());
+            }
+        }
+        if(!multiDel.isEmpty())
+        cmsPrefrenceAreaProductRelationDao.multiDel(multiDel);
+
+    }
+
+    private void updateSubject(PmsProductParam productParam) {
+        List<CmsSubjectProductRelation> subjectList = productParam.getSubjectProductRelationList();
+        List<CmsSubjectProductRelation> dbsbSubjectList=cmsSubjectProductRelationDao.findByInfo(productParam.getId());
+        List<CmsSubjectProductRelation> multiInsertList=new ArrayList<>();
+        for (CmsSubjectProductRelation subItem : subjectList) {
+            if(!dbsbSubjectList.contains(subItem)){
+                subItem.setId(snowflakeConfig.snowFlackId());
+                subItem.setProductId(productParam.getId());
+                multiInsertList.add(subItem);
+            }
+
+        }
+        List<Long> multiDelList=new ArrayList<>();
+        if(!multiInsertList.isEmpty())
+        cmsSubjectProductRelationDao.insertList(multiInsertList);
+        for (CmsSubjectProductRelation dbSubjectItem : dbsbSubjectList) {
+            if(!subjectList.contains(dbSubjectItem)){
+                multiDelList.add(dbSubjectItem.getId());
+            }
+
+        }
+        if(!multiDelList.isEmpty())
+        cmsSubjectProductRelationDao.multiDel(multiDelList);
+
+    }
+
+    private void updateAttributeValue(PmsProductParam param) {
+        List<PmsProductAttributeValue> attributeList = param.getProductAttributeValueList();
+        List<PmsProductAttributeValue> dbAVList= pmsProductAttributeValueDao.findByInfo(param.getId());
+        List<PmsProductAttributeValue> multiAddLst=new ArrayList<>();
+        for (PmsProductAttributeValue avItem : attributeList) {
+            if(!dbAVList.contains(avItem)){
+                avItem.setId(snowflakeConfig.snowFlackId());
+                avItem.setProductId(param.getId());
+                multiAddLst.add(avItem);
+            }
+        }
+        ArrayList<Long> multiDel = new ArrayList<>();
+        if(!multiAddLst.isEmpty())
+        pmsProductAttributeValueDao.insertList(multiAddLst);
+        for (PmsProductAttributeValue dbAVItem : dbAVList) {
+            if(!attributeList.contains(dbAVItem)){
+                multiDel.add(dbAVItem.getId());
+            }
+        }
+        if(!multiDel.isEmpty())
+        pmsProductAttributeValueDao.delMulti(multiDel);
+
+
     }
 
     public void  updateLadder(PmsProductParam productParam)  {
@@ -172,6 +259,7 @@ public class PmsProductServiceImpl implements PmsProductService {
                 insertList.add(ladderItem);
             }
         }
+        if(!insertList.isEmpty())
         pmsProductLadderDao.insertList(insertList);
         // 批量删除修改后不存在的ladder
         ArrayList<Long> delListProdctId = new ArrayList<>();
@@ -180,6 +268,7 @@ public class PmsProductServiceImpl implements PmsProductService {
                 delListProdctId.add( dbLadderItem.getId());
             }
         }
+        if(!delListProdctId.isEmpty())
         pmsProductLadderDao.delMulti(delListProdctId);
     }
 
@@ -196,21 +285,49 @@ public class PmsProductServiceImpl implements PmsProductService {
                 insertList.add(skuStockItem);
             }
         }
-        List<PmsSkuStock> trueInsertSku = handleSkuCode(insertList, productParam.getId());
-        pmsSkuStockDao.insertList(trueInsertSku);
-        // 批量删除修改后不存在的stock
+        if(!insertList.isEmpty()) {
+            List<PmsSkuStock> trueInsertSku = handleSkuCode(insertList, productParam.getId());
+            pmsSkuStockDao.insertList(trueInsertSku);
+
+        }// 批量删除修改后不存在的stock
         ArrayList<Long> delListProdctId = new ArrayList<>();
         for (PmsSkuStock dbStockSkuItem : dbStockSkuList) {
             if(!skuStockList.contains(dbStockSkuItem)){
                 delListProdctId.add( dbStockSkuItem.getId());
             }
         }
+        if(!delListProdctId.isEmpty())
         pmsSkuStockDao.delMulti(delListProdctId);
     }
 
-    public void updateFullRedution(PmsProductParam productParam){
 
+    public void updateFullRedution(PmsProductParam productParam){
+        List<PmsProductFullReduction> fullReductionList = productParam.getProductFullReductionList();
+
+        List<PmsProductFullReduction> dbFullReductionList= pmsProductFullReductionDao.findByInfo(productParam.getId());
+        // 批量加入新增的fullreduction
+        ArrayList<PmsProductFullReduction> insertList = new ArrayList<>();
+        for(PmsProductFullReduction fullreductionItem: fullReductionList){
+            if(!dbFullReductionList.contains(fullreductionItem)){
+                fullreductionItem.setId(snowflakeConfig.snowFlackId());
+                fullreductionItem.setProductId(productParam.getId());
+                insertList.add(fullreductionItem);
+            }
+        }
+        if(!insertList.isEmpty())
+        pmsProductFullReductionDao.insertList(insertList);
+        // 批量删除修改后不存在的fullreduction
+        ArrayList<Long> delListProdctId = new ArrayList<>();
+        for (PmsProductFullReduction dbStockSkuItem : dbFullReductionList) {
+            if(!fullReductionList.contains(dbStockSkuItem)){
+                delListProdctId.add( dbStockSkuItem.getId());
+            }
+        }
+        if(!delListProdctId.isEmpty())
+        pmsProductFullReductionDao.delMulti(delListProdctId);
     }
+
+
     private List<PmsSkuStock> handleSkuCode(List<PmsSkuStock> skuList,Long productId) {
         for (int i = 0; i < skuList.size(); i++) {
             PmsSkuStock pmsSkuStock = skuList.get(i);

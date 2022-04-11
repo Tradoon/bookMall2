@@ -25,7 +25,7 @@ public interface PmsSkuStockDao {
      * @param projectId
      * @return
      */
-    List<PmsSkuStock> findByInfo(@Param("projectId") Long projectId);
+    List<PmsSkuStock> findByInfo(@Param("productId") Long productId);
 
     /**
      * 批量删除sku信息

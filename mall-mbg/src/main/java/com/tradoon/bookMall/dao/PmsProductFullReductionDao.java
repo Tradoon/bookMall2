@@ -2,7 +2,9 @@ package com.tradoon.bookMall.dao;
 
 import com.tradoon.bookMall.model.PmsProductFullReduction;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,4 +19,17 @@ public interface PmsProductFullReductionDao {
      * @param fullRed
      */
     void insertList(List<PmsProductFullReduction> fullRed);
+
+    /**
+     * 根据project id查询
+     * @param id
+     * @return
+     */
+    List<PmsProductFullReduction> findByInfo(Long id);
+
+    /**
+     * 批量删除
+     * @param delListProdctId
+     */
+    void delMulti(@Param("id") ArrayList<Long> delListProdctId);
 }

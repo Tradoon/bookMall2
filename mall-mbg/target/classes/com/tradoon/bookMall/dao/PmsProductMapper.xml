@@ -287,6 +287,150 @@
 
         </trim>
     </insert>
+    <update id="updateByPrimaryKeySelective">
+        update pms_product
+        <set>
+            <if test="brandId != null">
+                brand_id=#{brandId},
+            </if>
+            <if test="brandId != null">
+                publish_house_id=#{brandId},
+            </if>
+            <if test="productCategoryId != null">
+                product_category_id=#{productCategoryId},
+            </if>
+            <if test="feightTemplateId != null">
+                feight_template_id=#{feightTemplateId},
+            </if>
+            <if test="productAttributeCategoryId != null">
+                product_attribute_category_id=#{productAttributeCategoryId},
+            </if>
+            <if test="name != null">
+                name=#{name},
+            </if>
+            <if test="pic != null">
+                pic=#{pic},
+            </if>
+            <if test="productSn != null">
+                product_sn=#{productSn},
+            </if>
+            <if test="deleteStatus != null">
+                delete_status=#{deleteStatus},
+            </if>
+            <if test="publishStatus != null">
+                publish_status=#{publishStatus},
+            </if>
+            <if test="newStatus != null">
+                new_status=#{newStatus},
+            </if>
+            <if test="recommandStatus != null">
+                recommand_status=#{recommandStatus},
+            </if>
+            <if test="verifyStatus != null">
+                verify_status=#{verifyStatus},
+            </if>
+            <if test="sort != null">
+                sort=#{sort},
+            </if>
+            <if test="sale != null">
+                sale=#{sale},
+            </if>
+            <if test="price != null">
+                price=#{price},
+            </if>
+            <if test="promotionPrice != null">
+                promotion_price=#{promotionPrice},
+            </if>
+            <if test="giftGrowth != null">
+                gift_growth=#{giftGrowth},
+            </if>
+            <if test="giftPoint != null">
+                gift_point=#{giftPoint},
+            </if>
+            <if test="usePointLimit != null">
+                use_point_limit=#{usePointLimit},
+            </if>
+            <if test="subTitle != null">
+                sub_title=#{subTitle},
+            </if>
+            <if test="originalPrice != null">
+                original_price=#{originalPrice},
+            </if>
+            <if test="stock != null">
+                stock=#{stock},
+            </if>
+            <if test="lowStock != null">
+                low_stock=#{lowStock},
+            </if>
+            <if test="unit != null">
+                unit=#{unit},
+            </if>
+            <if test="weight != null">
+                weight=#{weight},
+            </if>
+            <if test="previewStatus != null">
+                preview_status=#{previewStatus},
+            </if>
+            <if test="serviceIds != null">
+                service_ids=#{serviceIds},
+            </if>
+            <if test="keywords != null">
+                keywords=#{keywords},
+            </if>
+            <if test="note != null">
+                note=#{note},
+            </if>
+            <if test="albumPics != null">
+                album_pics=#{albumPics},
+            </if>
+            <if test="detailTitle != null">
+                detail_title=#{detailTitle},
+            </if>
+            <if test="promotionStartTime != null">
+                promotion_start_time=#{promotionStartTime},
+            </if>
+            <if test="promotionEndTime != null">
+                promotion_end_time=#{promotionEndTime},
+            </if>
+            <if test="promotionPerLimit != null">
+                promotion_per_limit=#{promotionPerLimit},
+            </if>
+            <if test="promotionType != null">
+                promotion_type=#{promotionType},
+            </if>
+            <if test="brandName != null">
+                brand_name=#{brandName},
+            </if>
+            <if test="brandName != null">
+                publish_house_name=#{brandName},
+            </if>
+            <if test="productCategoryName != null">
+                product_category_name=#{productCategoryName},
+            </if>
+            <if test="description != null">
+                description=#{description},
+            </if>
+            <if test="detailDesc != null">
+                detail_desc=#{detailDesc},
+            </if>
+            <if test="detailHtml != null">
+                detail_html=#{detailHtml},
+            </if>
+            <if test="detailMobileHtml != null">
+                detail_mobile_html=#{detailMobileHtml},
+            </if>
+            <if test="createTime!=null">
+                create_time=#{createTime},
+            </if>
+            <if test="updateTime!=null">
+                update_time=#{updateTime}
+            </if>
+        </set>
+
+        where
+            id=#{id}
+
+    </update>
 
     <select id="findBySelective" resultType="com.tradoon.bookMall.model.PmsProduct">
         select
