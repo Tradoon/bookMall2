@@ -5,6 +5,7 @@ import com.tradoon.bookMall.api.CommonResult;
 import com.tradoon.bookMall.dto.PmsProductCategoryParam;
 import com.tradoon.bookMall.model.PmsProductAttributeCategory;
 import com.tradoon.bookMall.model.PmsProductCategory;
+import com.tradoon.bookMall.model.PmsProductCategoryWithChildrenItem;
 import com.tradoon.bookMall.service.PmsProductCategoryService;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
@@ -68,5 +69,10 @@ public class PmsProductCategoryController {
         return  pmsProductCategoryService.update(id, productCategoryParam);
 
     }
+    @ApiOperation("查询所有一级分类及子分类")
+    @GetMapping("/list/withChildren")
+    public CommonResult<List<PmsProductCategoryWithChildrenItem>> listWithChildren() {
+        return pmsProductCategoryService.listWithChildren();
 
+    }
 }

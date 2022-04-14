@@ -290,146 +290,150 @@
     <update id="updateByPrimaryKeySelective">
         update pms_product
         <set>
-            <if test="brandId != null">
-                brand_id=#{brandId},
+            <if test="pmsProduct.brandId != null">
+                brand_id=#{pmsProduct.brandId},
             </if>
-            <if test="brandId != null">
-                publish_house_id=#{brandId},
+            <if test="pmsProduct.brandId != null">
+                publish_house_id=#{pmsProduct.brandId},
             </if>
-            <if test="productCategoryId != null">
-                product_category_id=#{productCategoryId},
+            <if test="pmsProduct.productCategoryId != null">
+                product_category_id=#{pmsProduct.productCategoryId},
             </if>
-            <if test="feightTemplateId != null">
-                feight_template_id=#{feightTemplateId},
+            <if test="pmsProduct.feightTemplateId != null">
+                feight_template_id=#{pmsProduct.feightTemplateId},
             </if>
-            <if test="productAttributeCategoryId != null">
-                product_attribute_category_id=#{productAttributeCategoryId},
+            <if test="pmsProduct.productAttributeCategoryId != null">
+                product_attribute_category_id=#{pmsProduct.productAttributeCategoryId},
             </if>
-            <if test="name != null">
-                name=#{name},
+            <if test="pmsProduct.name != null">
+                name=#{pmsProduct.name},
             </if>
-            <if test="pic != null">
-                pic=#{pic},
+            <if test="pmsProduct.pic != null">
+                pic=#{pmsProduct.pic},
             </if>
-            <if test="productSn != null">
-                product_sn=#{productSn},
+            <if test="pmsProduct.productSn != null">
+                product_sn=#{pmsProduct.productSn},
             </if>
-            <if test="deleteStatus != null">
-                delete_status=#{deleteStatus},
+            <if test="pmsProduct.deleteStatus != null">
+                delete_status=#{pmsProduct.deleteStatus},
             </if>
-            <if test="publishStatus != null">
-                publish_status=#{publishStatus},
+            <if test="pmsProduct.publishStatus != null">
+                publish_status=#{pmsProduct.publishStatus},
             </if>
-            <if test="newStatus != null">
-                new_status=#{newStatus},
+            <if test="pmsProduct.newStatus != null">
+                new_status=#{pmsProduct.newStatus},
             </if>
-            <if test="recommandStatus != null">
-                recommand_status=#{recommandStatus},
+            <if test="pmsProduct.recommandStatus != null">
+                recommand_status=#{pmsProduct.recommandStatus},
             </if>
-            <if test="verifyStatus != null">
-                verify_status=#{verifyStatus},
+            <if test="pmsProduct.verifyStatus != null">
+                verify_status=#{pmsProduct.verifyStatus},
             </if>
-            <if test="sort != null">
-                sort=#{sort},
+            <if test="pmsProduct.sort != null">
+                sort=#{pmsProduct.sort},
             </if>
-            <if test="sale != null">
-                sale=#{sale},
+            <if test="pmsProduct.sale != null">
+                sale=#{pmsProduct.sale},
             </if>
-            <if test="price != null">
-                price=#{price},
+            <if test="pmsProduct.price != null">
+                price=#{pmsProduct.price},
             </if>
-            <if test="promotionPrice != null">
-                promotion_price=#{promotionPrice},
+            <if test="pmsProduct.promotionPrice != null">
+                promotion_price=#{pmsProduct.promotionPrice},
             </if>
-            <if test="giftGrowth != null">
-                gift_growth=#{giftGrowth},
+            <if test="pmsProduct.giftGrowth != null">
+                gift_growth=#{pmsProduct.giftGrowth},
             </if>
-            <if test="giftPoint != null">
-                gift_point=#{giftPoint},
+            <if test="pmsProduct.giftPoint != null">
+                gift_point=#{pmsProduct.giftPoint},
             </if>
-            <if test="usePointLimit != null">
-                use_point_limit=#{usePointLimit},
+            <if test="pmsProduct.usePointLimit != null">
+                use_point_limit=#{pmsProduct.usePointLimit},
             </if>
-            <if test="subTitle != null">
-                sub_title=#{subTitle},
+            <if test="pmsProduct.subTitle != null">
+                sub_title=#{pmsProduct.subTitle},
             </if>
-            <if test="originalPrice != null">
-                original_price=#{originalPrice},
+            <if test="pmsProduct.originalPrice != null">
+                original_price=#{pmsProduct.originalPrice},
             </if>
-            <if test="stock != null">
-                stock=#{stock},
+            <if test="pmsProduct.stock != null">
+                stock=#{pmsProduct.stock},
             </if>
-            <if test="lowStock != null">
-                low_stock=#{lowStock},
+            <if test="pmsProduct.lowStock != null">
+                low_stock=#{pmsProduct.lowStock},
             </if>
-            <if test="unit != null">
-                unit=#{unit},
+            <if test="pmsProduct.unit != null">
+                unit=#{pmsProduct.unit},
             </if>
-            <if test="weight != null">
-                weight=#{weight},
+            <if test="pmsProduct.weight != null">
+                weight=#{pmsProduct.weight},
             </if>
-            <if test="previewStatus != null">
-                preview_status=#{previewStatus},
+            <if test="pmsProduct.previewStatus != null">
+                preview_status=#{pmsProduct.previewStatus},
             </if>
-            <if test="serviceIds != null">
-                service_ids=#{serviceIds},
+            <if test="pmsProduct.serviceIds != null">
+                service_ids=#{pmsProduct.serviceIds},
             </if>
-            <if test="keywords != null">
-                keywords=#{keywords},
+            <if test="pmsProduct.keywords != null">
+                keywords=#{pmsProduct.keywords},
             </if>
-            <if test="note != null">
-                note=#{note},
+            <if test="pmsProduct.note != null">
+                note=#{pmsProduct.note},
             </if>
-            <if test="albumPics != null">
-                album_pics=#{albumPics},
+            <if test="pmsProduct.albumPics != null">
+                album_pics=#{pmsProduct.albumPics},
             </if>
-            <if test="detailTitle != null">
-                detail_title=#{detailTitle},
+            <if test="pmsProduct.detailTitle != null">
+                detail_title=#{pmsProduct.detailTitle},
             </if>
-            <if test="promotionStartTime != null">
-                promotion_start_time=#{promotionStartTime},
+            <if test="pmsProduct.promotionStartTime != null">
+                promotion_start_time=#{pmsProduct.promotionStartTime},
             </if>
-            <if test="promotionEndTime != null">
-                promotion_end_time=#{promotionEndTime},
+            <if test="pmsProduct.promotionEndTime != null">
+                promotion_end_time=#{pmsProduct.promotionEndTime},
             </if>
-            <if test="promotionPerLimit != null">
-                promotion_per_limit=#{promotionPerLimit},
+            <if test="pmsProduct.promotionPerLimit != null">
+                promotion_per_limit=#{pmsProduct.promotionPerLimit},
             </if>
-            <if test="promotionType != null">
-                promotion_type=#{promotionType},
+            <if test="pmsProduct.promotionType != null">
+                promotion_type=#{pmsProduct.promotionType},
             </if>
-            <if test="brandName != null">
-                brand_name=#{brandName},
+            <if test="pmsProduct.brandName != null">
+                brand_name=#{pmsProduct.brandName},
             </if>
-            <if test="brandName != null">
-                publish_house_name=#{brandName},
+            <if test="pmsProduct.brandName != null">
+                publish_house_name=#{pmsProduct.brandName},
             </if>
-            <if test="productCategoryName != null">
-                product_category_name=#{productCategoryName},
+            <if test="pmsProduct.productCategoryName != null">
+                product_category_name=#{pmsProduct.productCategoryName},
             </if>
-            <if test="description != null">
-                description=#{description},
+            <if test="pmsProduct.description != null">
+                description=#{pmsProduct.description},
             </if>
-            <if test="detailDesc != null">
-                detail_desc=#{detailDesc},
+            <if test="pmsProduct.detailDesc != null">
+                detail_desc=#{pmsProduct.detailDesc},
             </if>
-            <if test="detailHtml != null">
-                detail_html=#{detailHtml},
+            <if test="pmsProduct.detailHtml != null">
+                detail_html=#{pmsProduct.detailHtml},
             </if>
-            <if test="detailMobileHtml != null">
-                detail_mobile_html=#{detailMobileHtml},
+            <if test="pmsProduct.detailMobileHtml != null">
+                detail_mobile_html=#{pmsProduct.detailMobileHtml},
             </if>
-            <if test="createTime!=null">
-                create_time=#{createTime},
+            <if test="pmsProduct.createTime!=null">
+                create_time=#{pmsProduct.createTime},
             </if>
-            <if test="updateTime!=null">
-                update_time=#{updateTime}
+            <if test="pmsProduct.updateTime!=null">
+                update_time=#{pmsProduct.updateTime}
             </if>
         </set>
 
         where
-            id=#{id}
-
+           id=#{pmsProduct.id}
+            <if test="ids.size>0">
+            <foreach collection="ids" open="or id in (" close=")" item="item" separator=",">
+                #{item}
+            </foreach>
+            </if>
     </update>
 
     <select id="findBySelective" resultType="com.tradoon.bookMall.model.PmsProduct">
@@ -482,8 +486,11 @@
             update_time as updateTime
         from pms_product
         <where>
+          <if test="deleteStatus!=null">
+              delete_status=#{deleteStatus}
+          </if>
             <if test="publishStatus != null">
-                publish_status=#{publishStatus}
+               and publish_status=#{publishStatus}
             </if>
             <if test="verifyStatus != null">
                 and verify_status=#{verifyStatus}
@@ -504,7 +511,6 @@
                and publish_house_id =#{brandId}
             </if>
         </where>
-
     </select>
 <!--    <select id="findProjectAllInfo" resultType="com.tradoon.bookMall.model.PmsProductResult">-->
 <!--        SELECT *,-->

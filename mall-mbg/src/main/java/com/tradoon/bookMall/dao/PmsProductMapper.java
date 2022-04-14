@@ -3,6 +3,7 @@ package com.tradoon.bookMall.dao;
 import com.tradoon.bookMall.model.PmsProduct;
 import com.tradoon.bookMall.model.PmsProductResult;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -30,13 +31,6 @@ public interface PmsProductMapper {
      * 对商品信息进行更改
      * @param pmsProduct
      */
-    void updateByPrimaryKeySelective(PmsProduct pmsProduct);
-
-    /**
-     * 关联查询商品的所有信息
-     * @param id
-     * @return
-     */
-    PmsProductResult findProjectAllInfo(Long id);
+    void updateByPrimaryKeySelective(@Param("pmsProduct") PmsProduct pmsProduct, @Param("ids") List<Long> ids);
 
 }

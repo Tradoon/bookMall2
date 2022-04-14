@@ -1,6 +1,7 @@
 package com.tradoon.bookMall.dao;
 
 import com.tradoon.bookMall.model.PmsProductCategory;
+import com.tradoon.bookMall.model.PmsProductCategoryWithChildrenItem;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -38,4 +39,11 @@ public interface PmsProductCategoryMapper {
      * @param id
      */
     void delete(@Param("id") Long id);
+
+    /**
+     * 筛选子分类
+     * @param parentId
+     * @return
+     */
+    List<PmsProductCategoryWithChildrenItem> listWithChildren(Long parentId);
 }

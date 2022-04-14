@@ -12,6 +12,7 @@ import com.tradoon.bookMall.dto.PmsProductCategoryParam;
 import com.tradoon.bookMall.model.PmsProductAttributeCategory;
 import com.tradoon.bookMall.model.PmsProductCategory;
 import com.tradoon.bookMall.model.PmsProductCategoryAttributeRelation;
+import com.tradoon.bookMall.model.PmsProductCategoryWithChildrenItem;
 import com.tradoon.bookMall.service.PmsProductCategoryService;
 import com.tradoon.bookMall.utils.SnowflakeConfig;
 import net.logstash.logback.encoder.org.apache.commons.lang.StringUtils;
@@ -158,5 +159,17 @@ public class PmsProductCategoryServiceImpl implements PmsProductCategoryService 
         }
         pmsProductCategoryMapper.delete(id);
         return CommonResult.success(null);
+    }
+
+    @Override
+    public  CommonResult<List<PmsProductCategoryWithChildrenItem>> listWithChildren() {
+        //
+
+        Long parentId=0L;
+
+        PmsProductCategory parentCandition = new PmsProductCategory();
+        parentCandition.setId(parentId);
+        List<PmsProductCategoryWithChildrenItem> res = pmsProductCategoryMapper.listWithChildren(parentId);
+        return CommonResult.success(res);
     }
 }

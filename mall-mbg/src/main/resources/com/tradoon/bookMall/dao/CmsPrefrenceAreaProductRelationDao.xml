@@ -24,5 +24,6 @@
         from cms_prefrence_area_product_relation
         where product_id=#{productId}
 
+
     </select>
 </mapper>

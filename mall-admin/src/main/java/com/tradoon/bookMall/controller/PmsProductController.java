@@ -11,6 +11,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * author:tradoon
  * desciption:商品Controller类
@@ -47,6 +49,39 @@ public class PmsProductController {
     @GetMapping("/updateInfo/{id}")
     public CommonResult<PmsProductResult>  getUpdateInfo(@PathVariable Long id){
         return pmsProductService.getUpdateInfo(id);
+    }
+
+    @ApiOperation("批量上下架商品")
+    @PostMapping("/update/publishStatus")
+    @ResponseBody
+    public CommonResult updatePublishStatus(@RequestParam("ids") List<Long> ids,
+                                            @RequestParam("publishStatus") Integer publishStatus) {
+      return  pmsProductService.updatePublishStatus(ids, publishStatus);
+
+    }
+    @ApiOperation("批量上下架商品")
+    @PostMapping("update/recommendStatus")
+    @ResponseBody
+    public CommonResult updateRecommendStatus(@RequestParam("ids") List<Long> ids,
+                                            @RequestParam("recommendStatus") Integer recommendStatus) {
+        return  pmsProductService.updateRecommendStatus(ids, recommendStatus);
+
+    }
+
+    @ApiOperation("批量上下架商品")
+    @PostMapping("update/newStatus")
+    public CommonResult updateNewStatus(@RequestParam("ids") List<Long> ids,
+                                              @RequestParam("newStatus") Integer newStatus) {
+        return  pmsProductService.updateNewStatus(ids, newStatus);
+
+    }
+
+    @ApiOperation("商品批量进入回收站")
+    @PostMapping("update/deleteStatus")
+    public CommonResult updateDeleteStatus(@RequestParam("ids") List<Long> ids,
+                                        @RequestParam("deleteStatus") Integer deleteStatus) {
+        return  pmsProductService.updateDeleteStatus(ids, deleteStatus);
+
     }
 
 

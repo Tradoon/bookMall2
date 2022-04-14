@@ -5,6 +5,7 @@ import com.tradoon.bookMall.api.CommonResult;
 import com.tradoon.bookMall.dto.PmsProductCategoryParam;
 import com.tradoon.bookMall.model.PmsProductAttributeCategory;
 import com.tradoon.bookMall.model.PmsProductCategory;
+import com.tradoon.bookMall.model.PmsProductCategoryWithChildrenItem;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -28,4 +29,6 @@ public interface PmsProductCategoryService {
     CommonResult update(Long id, PmsProductCategoryParam productCategoryParam);
 
     CommonResult delete(Long id);
+
+    CommonResult<List<PmsProductCategoryWithChildrenItem>> listWithChildren();
 }

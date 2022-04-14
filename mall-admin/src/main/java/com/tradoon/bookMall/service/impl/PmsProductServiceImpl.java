@@ -153,7 +153,8 @@ public class PmsProductServiceImpl implements PmsProductService {
         }
         pmsProduct.setUpdateTime(new Date());
         // 更改产品信息
-        pmsProductMapper.updateByPrimaryKeySelective(pmsProduct);
+
+        pmsProductMapper.updateByPrimaryKeySelective(pmsProduct,new ArrayList<>());
        //todo 更改为逻辑删除，同时筛选出未更改的做处理
         //更改关联项
        // 修改会员价格
@@ -185,6 +186,7 @@ public class PmsProductServiceImpl implements PmsProductService {
         PmsProduct pmsProduct = new PmsProduct();
         PmsProductResult res = new PmsProductResult();
         pmsProduct.setId(id);
+        pmsProduct.setDeleteStatus(0);
         List<PmsProduct> bySelective = pmsProductMapper.findBySelective(pmsProduct);
         PmsProduct productBySelective = bySelective.get(0);
         Long categoryId = productBySelective.getProductCategoryId();
@@ -209,6 +211,39 @@ public class PmsProductServiceImpl implements PmsProductService {
         return CommonResult.success(res);
     }
 
+    @Override
+    public CommonResult updatePublishStatus(List<Long> ids, Integer publishStatus) {
+        PmsProduct pmsProduct = new PmsProduct();
+        pmsProduct.setPublishStatus(publishStatus);
+        pmsProductMapper.updateByPrimaryKeySelective(pmsProduct,ids);
+        return CommonResult.success(null);
+    }
+
+    @Override
+    public CommonResult updateRecommendStatus(List<Long> ids, Integer recommendStatus) {
+        PmsProduct pmsProduct = new PmsProduct();
+        pmsProduct.setRecommandStatus(recommendStatus);
+        pmsProductMapper.updateByPrimaryKeySelective(pmsProduct,ids);
+        return CommonResult.success(null);
+    }
+
+    @Override
+    public CommonResult updateNewStatus(List<Long> ids, Integer newStatus) {
+        PmsProduct pmsProduct = new PmsProduct();
+        pmsProduct.setNewStatus(newStatus);
+        pmsProductMapper.updateByPrimaryKeySelective(pmsProduct,ids);
+        return CommonResult.success(null);
+    }
+
+    @Override
+    public CommonResult updateDeleteStatus(List<Long> ids, Integer deleteStatus) {
+        PmsProduct pmsProduct = new PmsProduct();
+        pmsProduct.setDeleteStatus(deleteStatus);
+        pmsProductMapper.updateByPrimaryKeySelective(pmsProduct,ids);
+        return CommonResult.success(null);
+
+    }
+
     private void updatePrefrenceAreaProductRelation(PmsProductParam productParam) {
         List<CmsPrefrenceAreaProductRelation> papr = productParam.getPrefrenceAreaProductRelationList();
         List<CmsPrefrenceAreaProductRelation> dbPapr= cmsPrefrenceAreaProductRelationDao.findByInfo(productParam.getId());
@@ -231,7 +266,7 @@ public class PmsProductServiceImpl implements PmsProductService {
         cmsPrefrenceAreaProductRelationDao.multiDel(multiDel);
 
     }
-
+//todo 后期看能不能用replaceAll来进行优化
     private void updateSubject(PmsProductParam productParam) {
         List<CmsSubjectProductRelation> subjectList = productParam.getSubjectProductRelationList();
         List<CmsSubjectProductRelation> dbsbSubjectList=cmsSubjectProductRelationDao.findByInfo(productParam.getId());

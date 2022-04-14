@@ -7,6 +7,8 @@ import com.tradoon.bookMall.dto.PmsProductQueryParam;
 import com.tradoon.bookMall.model.PmsProduct;
 import com.tradoon.bookMall.model.PmsProductResult;
 
+import java.util.List;
+
 /**
  * author:tradoon
  * desciption:
@@ -28,4 +30,18 @@ public interface PmsProductService {
     CommonResult update(Long id, PmsProductParam productParam);
 
     CommonResult<PmsProductResult> getUpdateInfo(Long id);
+
+    /**
+     * 更改上架状态
+     * @param ids
+     * @param publishStatus
+     * @return
+     */
+    CommonResult updatePublishStatus(List<Long> ids, Integer publishStatus);
+
+    CommonResult updateRecommendStatus(List<Long> ids, Integer recommendStatus);
+
+    CommonResult updateNewStatus(List<Long> ids, Integer newStatus);
+
+    CommonResult updateDeleteStatus(List<Long> ids, Integer deleteStatus);
 }
